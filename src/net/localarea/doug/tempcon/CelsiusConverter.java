@@ -10,27 +10,23 @@ package net.localarea.doug.tempcon;
 
 public class CelsiusConverter implements TemperatureConverter
 {
-	@SuppressWarnings("unused")
-	private double degreesC;
-
 	public CelsiusConverter()
 	{
 		super();
-		degreesC = 0;
 	}
 
 	public double convertFromFahrenheit(double fromTemp)
 	{
-		return degreesC = (fromTemp - 32.0) * (5.0/9.0);
+		return (fromTemp - 32.0) * (5.0/9.0);
 	}
 
 	public double convertFromCelsius(double fromTemp)
 	{
-		return degreesC = fromTemp;
+		return fromTemp;
 	}
 
 	public double convertFromKelvin(double fromTemp)
 	{
-		return degreesC = fromTemp - 273.15;
+		return fromTemp - 273.15;
 	}
 }
