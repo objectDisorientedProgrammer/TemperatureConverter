@@ -64,13 +64,19 @@ public class Window extends JFrame
 	{
 		super(applicationName);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(frameWidth, frameHeight); 	// set frame size 
+		setSize(frameWidth, frameHeight);
 		setLocationRelativeTo(null); 		// set frame location to center of screen
 		setLayout(null);
 		
 		formatter = new DecimalFormat(precision);
 		
 		// add GUI components
+		createAndShowGUI();
+        
+        setVisible(true);	// display
+	}
+
+	private void createAndShowGUI() {
 		// label to go with temperatureInputTF
 		fromLbl = new JLabel("From"); 
 		fromLbl.setBounds(xOffset, yOffset + 30, width - 40, height);
@@ -164,8 +170,6 @@ public class Window extends JFrame
 			}
 		});
         helpMenu.add(menuItemAbout);
-        
-        setVisible(true);	// display
 	}
 	
 	private void updateResultTF()
