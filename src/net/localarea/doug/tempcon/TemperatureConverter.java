@@ -14,19 +14,16 @@ package net.localarea.doug.tempcon;
 public interface TemperatureConverter
 {
 	/**
-	 * 
 	 * @param fromTemp - number to convert
 	 */
 	public double convertFromFahrenheit(double fromTemp);
 
 	/**
-	 * 
 	 * @param fromTemp - number to convert
 	 */
 	public double convertFromCelsius(double fromTemp);
 
 	/**
-	 * 
 	 * @param fromTemp - number to convert
 	 */
 	public double convertFromKelvin(double fromTemp);
