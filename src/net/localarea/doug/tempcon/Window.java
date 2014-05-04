@@ -14,8 +14,10 @@ package net.localarea.doug.tempcon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +32,7 @@ public class Window extends JFrame
 {
 	// variables
 	private static final String applicationName = "Temperature Converter";
-	private static final String version = "2.1";
+	private static final String version = "2.14";
 	private final static String author = "Douglas Chidester";
 	private static int frameWidth = 345;
 	private static int frameHeight = 160;
@@ -59,6 +61,9 @@ public class Window extends JFrame
 	private JMenuItem menuItemAbout;
 	private JMenuItem menuItemExit;
 	private JMenuItem menuItemGettingStarted;
+	
+	// Images
+	String imagePath = "images/";
 	
 	public Window()
 	{
@@ -139,9 +144,11 @@ public class Window extends JFrame
         setJMenuBar(menuBar);
         
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
         
-        menuItemExit = new JMenuItem("Exit");
+        menuItemExit = new JMenuItem("Exit", new ImageIcon(imagePath+"exit.png"));
+        menuItemExit.setMnemonic(KeyEvent.VK_E);
         menuItemExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// close program if user clicks: File -> Exit
@@ -151,22 +158,29 @@ public class Window extends JFrame
         fileMenu.add(menuItemExit);
         
         JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
         menuBar.add(helpMenu);
         
-        menuItemGettingStarted = new JMenuItem("Getting Started");
+        menuItemGettingStarted = new JMenuItem("Getting Started", new ImageIcon(imagePath+"help.png"));
+        menuItemGettingStarted.setMnemonic(KeyEvent.VK_G);
+        menuItemGettingStarted.setToolTipText("Basic useage instructions");
         menuItemGettingStarted.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// show basic use instructions if user clicks: Help -> Getting Started
-				JOptionPane.showMessageDialog(null, gettingStartedMsg, "Getting Started", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, gettingStartedMsg, "Getting Started",
+						JOptionPane.PLAIN_MESSAGE, new ImageIcon(imagePath+"help64.png"));
 			}
 		});
         helpMenu.add(menuItemGettingStarted);
         
-        menuItemAbout = new JMenuItem("About");
+        menuItemAbout = new JMenuItem("About", new ImageIcon(imagePath+"about.png"));
+        menuItemAbout.setMnemonic(KeyEvent.VK_A);
+        menuItemAbout.setToolTipText("About this program");
         menuItemAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// show credits & version if user clicks: Help -> About
-				JOptionPane.showMessageDialog(null, "Created by " + author + "\nVersion " + version, "About" ,JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Created by " + author + "\nVersion " + version, "About",
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(imagePath+"person.png"));
 			}
 		});
         helpMenu.add(menuItemAbout);
