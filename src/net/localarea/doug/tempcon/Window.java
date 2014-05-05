@@ -77,6 +77,7 @@ public class Window extends JFrame
 		
 		// add GUI components
 		createAndShowGUI();
+		createMenubar();
         
         setVisible(true);	// display
 	}
@@ -138,9 +139,11 @@ public class Window extends JFrame
 			}
 		});
         getContentPane().add(toTemperature);
-        
-        // add menu and items
-        JMenuBar menuBar = new JMenuBar();
+	}
+	
+	private void createMenubar()
+	{
+		JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         
         JMenu fileMenu = new JMenu("File");
