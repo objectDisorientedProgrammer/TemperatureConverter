@@ -63,7 +63,7 @@ public class Window extends JFrame
 	private JMenuItem menuItemGettingStarted;
 	
 	// Images
-	String imagePath = "images/";
+	String imagePath = "/images/";	// path in jar file
 	
 	public Window()
 	{
@@ -150,7 +150,7 @@ public class Window extends JFrame
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
         
-        menuItemExit = new JMenuItem("Exit", new ImageIcon(imagePath+"exit.png"));
+        menuItemExit = new JMenuItem("Exit", new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
         menuItemExit.setMnemonic(KeyEvent.VK_E);
         menuItemExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -164,26 +164,26 @@ public class Window extends JFrame
         helpMenu.setMnemonic(KeyEvent.VK_H);
         menuBar.add(helpMenu);
         
-        menuItemGettingStarted = new JMenuItem("Getting Started", new ImageIcon(imagePath+"help.png"));
+        menuItemGettingStarted = new JMenuItem("Getting Started", new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
         menuItemGettingStarted.setMnemonic(KeyEvent.VK_G);
         menuItemGettingStarted.setToolTipText("Basic useage instructions");
         menuItemGettingStarted.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// show basic use instructions if user clicks: Help -> Getting Started
 				JOptionPane.showMessageDialog(null, gettingStartedMsg, "Getting Started",
-						JOptionPane.PLAIN_MESSAGE, new ImageIcon(imagePath+"help64.png"));
+						JOptionPane.PLAIN_MESSAGE, new ImageIcon(this.getClass().getResource(imagePath+"help64.png")));
 			}
 		});
         helpMenu.add(menuItemGettingStarted);
         
-        menuItemAbout = new JMenuItem("About", new ImageIcon(imagePath+"about.png"));
+        menuItemAbout = new JMenuItem("About", new ImageIcon(this.getClass().getResource(imagePath+"about.png")));
         menuItemAbout.setMnemonic(KeyEvent.VK_A);
         menuItemAbout.setToolTipText("About this program");
         menuItemAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// show credits & version if user clicks: Help -> About
 				JOptionPane.showMessageDialog(null, "Created by " + author + "\nVersion " + version, "About",
-						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(imagePath+"person.png"));
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
 			}
 		});
         helpMenu.add(menuItemAbout);
