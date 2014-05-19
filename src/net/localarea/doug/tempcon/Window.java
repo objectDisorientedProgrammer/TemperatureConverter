@@ -32,7 +32,7 @@ public class Window extends JFrame
 {
 	// variables
 	private static final String applicationName = "Temperature Converter";
-	private static final String version = "2.14";
+	private static final String version = "2.15";
 	private final static String author = "Douglas Chidester";
 	private static int frameWidth = 345;
 	private static int frameHeight = 160;
@@ -85,13 +85,13 @@ public class Window extends JFrame
 	private void createAndShowGUI() {
 		// label to go with temperatureInputTF
 		fromLbl = new JLabel("From"); 
-		fromLbl.setBounds(xOffset, yOffset + 30, width - 40, height);
+		fromLbl.setBounds(xOffset, yOffset + 25, width - 40, height);
 		getContentPane().add(fromLbl);
 		
 		// temperatureInputTF
 		temperatureInputTF = new JTextField(8);
 		temperatureInputTF.setText("" + 0.0f);
-		temperatureInputTF.setBounds(55, 25, 110, 20);
+		temperatureInputTF.setBounds(55, 20, 110, 20);
 		temperatureInputTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// get input from TF
@@ -103,14 +103,14 @@ public class Window extends JFrame
 		
 		// label to go with temperatureResultTF
 		toLbl = new JLabel("To"); 
-		toLbl.setBounds(172, 35, 18, 25);
+		toLbl.setBounds(172, 30, 18, 25);
 		getContentPane().add(toLbl);
 		
 		// temperatureResultTF
 		temperatureResultTF = new JTextField(10);
 		temperatureResultTF.setText("");
 		temperatureResultTF.setEditable(false);
-		temperatureResultTF.setBounds(196, 25, 110, 20);
+		temperatureResultTF.setBounds(196, 20, 110, 20);
 		getContentPane().add(temperatureResultTF);
 		
 		// add comboboxes
