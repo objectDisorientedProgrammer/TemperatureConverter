@@ -12,6 +12,7 @@
 
 package net.localarea.doug.tempcon;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -25,17 +26,20 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame
 {
 	// variables
 	private static final String applicationName = "Temperature Converter";
-	private static final String version = "2.15";
+	private static final String version = "2.16.0";
 	private final static String author = "Douglas Chidester";
 	private static int frameWidth = 345;
 	private static int frameHeight = 160;
+	private JPanel mainPanel;
 	
 	private TemperatureConverter tempCon;
 	
@@ -71,27 +75,35 @@ public class Window extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(frameWidth, frameHeight);
 		setLocationRelativeTo(null); 		// set frame location to center of screen
-		setLayout(null);
 		
 		formatter = new DecimalFormat(precision);
 		
 		// add GUI components
 		createAndShowGUI();
 		createMenubar();
-        
+        //pack();
         setVisible(true);	// display
 	}
 
-	private void createAndShowGUI() {
+	private void createAndShowGUI()
+	{
+		int rows = 3;
+		int columns = 2;
+		int vSpacing = 5;
+		int hSpacing = 5;
+		mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
+		
 		// label to go with temperatureInputTF
-		fromLbl = new JLabel("From"); 
-		fromLbl.setBounds(xOffset, yOffset + 25, width - 40, height);
-		getContentPane().add(fromLbl);
+		fromLbl = new JLabel("From", null, JLabel.CENTER); 
+		mainPanel.add(fromLbl);
+		
+		// label to go with temperatureResultTF
+		toLbl = new JLabel("To", null, JLabel.CENTER); 
+		mainPanel.add(toLbl);
 		
 		// temperatureInputTF
 		temperatureInputTF = new JTextField(8);
 		temperatureInputTF.setText("" + 0.0f);
-		temperatureInputTF.setBounds(55, 20, 110, 20);
 		temperatureInputTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// get input from TF
@@ -99,46 +111,40 @@ public class Window extends JFrame
 				updateResultTF();
 			}
 		});
-		getContentPane().add(temperatureInputTF);
-		
-		// label to go with temperatureResultTF
-		toLbl = new JLabel("To"); 
-		toLbl.setBounds(172, 30, 18, 25);
-		getContentPane().add(toLbl);
+		mainPanel.add(temperatureInputTF);
 		
 		// temperatureResultTF
 		temperatureResultTF = new JTextField(10);
-		temperatureResultTF.setText("");
+		temperatureResultTF.setText("-17.77778");
 		temperatureResultTF.setEditable(false);
-		temperatureResultTF.setBounds(196, 20, 110, 20);
-		getContentPane().add(temperatureResultTF);
+		mainPanel.add(temperatureResultTF);
 		
 		// add comboboxes
 		fromTemperature = new JComboBox<String>(choices);
 		fromTemperature.setEditable(false);
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
-        fromTemperature.setBounds(55, 50, 110, 25);
         fromTemperature.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				temperature = Float.parseFloat(temperatureInputTF.getText().toString());
 				updateResultTF();
 			}
 		});
-        getContentPane().add(fromTemperature);
+        mainPanel.add(fromTemperature);
         
         toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
-        toTemperature.setBounds(196, 50, 110, 25);
         toTemperature.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				temperature = Float.parseFloat(temperatureInputTF.getText().toString());
 				updateResultTF();
 			}
 		});
-        getContentPane().add(toTemperature);
+        mainPanel.add(toTemperature);
+        
+        this.add(mainPanel);
 	}
 	
 	private void createMenubar()
