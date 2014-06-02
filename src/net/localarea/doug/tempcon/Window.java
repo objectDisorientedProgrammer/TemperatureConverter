@@ -4,10 +4,6 @@
  * created February 14, 2013
  * 
  * A JFrame with UI to convert between temperature scales. This window is where the logic is used.
- * 
- * [2/14/13]
- * updateResultTF() could use some work....
- * [6/25/13] version 2.1 - Fixed UI update to recalculate when combo boxes are changed.
  */
 
 package net.localarea.doug.tempcon;
@@ -28,14 +24,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame
 {
 	// variables
 	private static final String applicationName = "Temperature Converter";
-	private static final String version = "2.16.0";
+	private static final String version = "2.16.1";
 	private final static String author = "Douglas Chidester";
 	private static int frameWidth = 345;
 	private static int frameHeight = 160;
@@ -43,17 +38,13 @@ public class Window extends JFrame
 	
 	private TemperatureConverter tempCon;
 	
-	private int xOffset = 15;
-	private int yOffset = 5;
-	private int width = 80;
-	private int height = 25;
 	private DecimalFormat formatter;
 	private String precision = "#.#####";	// number of decimal places
 	private double temperature = 0.0;
 	
 	private String choices[] = {"Farenheit", "Celcius", "Kelvin"};
 	private String gettingStartedMsg = "Enter a temperature to convert, then press " +
-			"the enter key\nor select a different temperature scale to update the result.";
+			"the enter\nkey or select a different temperature scale.";
 	
 	// GUI components
 	private JTextField temperatureInputTF;
@@ -85,6 +76,9 @@ public class Window extends JFrame
         setVisible(true);	// display
 	}
 
+	/**
+	 * Create all GUI elements and add them to mainPanel.
+	 */
 	private void createAndShowGUI()
 	{
 		int rows = 3;
@@ -92,6 +86,8 @@ public class Window extends JFrame
 		int vSpacing = 5;
 		int hSpacing = 5;
 		mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
+		
+		TempChangeListener tcl = new TempChangeListener();
 		
 		// label to go with temperatureInputTF
 		fromLbl = new JLabel("From", null, JLabel.CENTER); 
@@ -104,19 +100,15 @@ public class Window extends JFrame
 		// temperatureInputTF
 		temperatureInputTF = new JTextField(8);
 		temperatureInputTF.setText("" + 0.0f);
-		temperatureInputTF.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// get input from TF
-				temperature = Float.parseFloat(temperatureInputTF.getText().toString());
-				updateResultTF();
-			}
-		});
+		temperatureInputTF.setHorizontalAlignment(JTextField.CENTER);
+		temperatureInputTF.addActionListener(tcl);
 		mainPanel.add(temperatureInputTF);
 		
 		// temperatureResultTF
 		temperatureResultTF = new JTextField(10);
 		temperatureResultTF.setText("-17.77778");
 		temperatureResultTF.setEditable(false);
+		temperatureResultTF.setHorizontalAlignment(JTextField.CENTER);
 		mainPanel.add(temperatureResultTF);
 		
 		// add comboboxes
@@ -124,29 +116,37 @@ public class Window extends JFrame
 		fromTemperature.setEditable(false);
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
-        fromTemperature.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				temperature = Float.parseFloat(temperatureInputTF.getText().toString());
-				updateResultTF();
-			}
-		});
+        fromTemperature.addActionListener(tcl);
         mainPanel.add(fromTemperature);
         
         toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
-        toTemperature.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				temperature = Float.parseFloat(temperatureInputTF.getText().toString());
-				updateResultTF();
-			}
-		});
+        toTemperature.addActionListener(tcl);
         mainPanel.add(toTemperature);
         
         this.add(mainPanel);
 	}
 	
+	/**
+	 * Class to handle changing temperature scales.
+	 * @author doug
+	 *
+	 */
+	private class TempChangeListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent ae)
+		{
+			temperature = Float.parseFloat(temperatureInputTF.getText().toString());
+			updateResultTF();
+		}
+	}
+	
+	/**
+	 * Create and add a menu bar to the frame.
+	 */
 	private void createMenubar()
 	{
 		JMenuBar menuBar = new JMenuBar();
@@ -160,8 +160,7 @@ public class Window extends JFrame
         menuItemExit.setMnemonic(KeyEvent.VK_E);
         menuItemExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// close program if user clicks: File -> Exit
-				dispose();
+				dispose(); // close program if user clicks: File -> Exit
 			}
 		});
         fileMenu.add(menuItemExit);
@@ -195,6 +194,9 @@ public class Window extends JFrame
         helpMenu.add(menuItemAbout);
 	}
 	
+	/**
+	 * Calculate the appropriate temperature and display it in the result textfield.
+	 */
 	private void updateResultTF()
 	{
 		// To farenheit cases
