@@ -11,6 +11,11 @@
 
 package net.localarea.doug.tempcon;
 
+/**
+ * Interface for use as an abstract base class.
+ * @author Doug
+ *
+ */
 public interface TemperatureConverter
 {
 	/**

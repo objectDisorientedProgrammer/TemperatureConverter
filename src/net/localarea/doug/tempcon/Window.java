@@ -30,7 +30,7 @@ public class Window extends JFrame
 {
 	// variables
 	private static final String applicationName = "Temperature Converter";
-	private static final String version = "2.16.1";
+	private static final String version = "2.16.2";
 	private final static String author = "Douglas Chidester";
 	private static int frameWidth = 345;
 	private static int frameHeight = 160;
@@ -46,6 +46,7 @@ public class Window extends JFrame
 	private String gettingStartedMsg = "Enter a temperature to convert, then press " +
 			"the enter\nkey or select a different temperature scale.";
 	
+	TempChangeListener tcl;
 	// GUI components
 	private JTextField temperatureInputTF;
 	private JTextField temperatureResultTF;
@@ -103,7 +104,7 @@ public class Window extends JFrame
 		int hSpacing = 5;
 		mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
 		
-		TempChangeListener tcl = new TempChangeListener();
+		tcl = new TempChangeListener();
 		
 		// label to go with temperatureInputTF
 		fromLbl = new JLabel("From", null, JLabel.CENTER); 
