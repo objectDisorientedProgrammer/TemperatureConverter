@@ -70,16 +70,32 @@ public class Window extends JFrame
 		formatter = new DecimalFormat(precision);
 		
 		// add GUI components
-		createAndShowGUI();
+		createGUI();
+		addComponentsToPanel();
 		createMenubar();
         //pack();
         setVisible(true);	// display
 	}
 
 	/**
-	 * Create all GUI elements and add them to mainPanel.
+	 * Add all GUI elements to the panel and the panel to the frame.
 	 */
-	private void createAndShowGUI()
+	private void addComponentsToPanel()
+	{
+		mainPanel.add(fromLbl);
+		mainPanel.add(toLbl);
+		mainPanel.add(fromTemperature);
+		mainPanel.add(toTemperature);
+		mainPanel.add(temperatureInputTF);
+		mainPanel.add(temperatureResultTF);
+		
+		this.add(mainPanel);
+	}
+
+	/**
+	 * Create all GUI elements.
+	 */
+	private void createGUI()
 	{
 		int rows = 3;
 		int columns = 2;
@@ -91,25 +107,21 @@ public class Window extends JFrame
 		
 		// label to go with temperatureInputTF
 		fromLbl = new JLabel("From", null, JLabel.CENTER); 
-		mainPanel.add(fromLbl);
 		
 		// label to go with temperatureResultTF
 		toLbl = new JLabel("To", null, JLabel.CENTER); 
-		mainPanel.add(toLbl);
 		
 		// temperatureInputTF
 		temperatureInputTF = new JTextField(8);
 		temperatureInputTF.setText("" + 0.0f);
 		temperatureInputTF.setHorizontalAlignment(JTextField.CENTER);
 		temperatureInputTF.addActionListener(tcl);
-		mainPanel.add(temperatureInputTF);
 		
 		// temperatureResultTF
 		temperatureResultTF = new JTextField(10);
 		temperatureResultTF.setText("-17.77778");
 		temperatureResultTF.setEditable(false);
 		temperatureResultTF.setHorizontalAlignment(JTextField.CENTER);
-		mainPanel.add(temperatureResultTF);
 		
 		// add comboboxes
 		fromTemperature = new JComboBox<String>(choices);
@@ -117,16 +129,12 @@ public class Window extends JFrame
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
         fromTemperature.addActionListener(tcl);
-        mainPanel.add(fromTemperature);
         
         toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
         toTemperature.addActionListener(tcl);
-        mainPanel.add(toTemperature);
-        
-        this.add(mainPanel);
 	}
 	
 	/**
