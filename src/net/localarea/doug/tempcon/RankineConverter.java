@@ -41,8 +41,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromFahrenheit(double fahrenheitTemp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return fahrenheitTemp + 459.67;
 	}
 
 	/* (non-Javadoc)
@@ -50,8 +49,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromCelsius(double celsiusTemp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (celsiusTemp + 273.15) * (9 / 5);
 	}
 
 	/* (non-Javadoc)
@@ -59,8 +57,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromKelvin(double kelvinTemp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return kelvinTemp * ( 9 / 5);
 	}
 
 	/* (non-Javadoc)
@@ -68,8 +65,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromRankine(double rankineTemp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return rankineTemp;
 	}
 
 }

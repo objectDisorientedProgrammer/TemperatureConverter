@@ -44,26 +44,29 @@ package net.localarea.doug.tempcon;
 public interface TemperatureConverter
 {
     /**
+     * Convert from Fahrenheit to the desired unit.
      * @param fahrenheitTemp - temperature in units of degrees Fahrenheit.
      * @return the converted value
      */
     public double convertFromFahrenheit(double fahrenheitTemp);
 
     /**
+     * Convert from Celsius to the desired unit.
      * @param celsiusTemp - temperature in units of degrees Celsius.
      * @return the converted value
      */
     public double convertFromCelsius(double celsiusTemp);
 
     /**
+     * Convert from Kelvin to the desired unit.
      * @param kelvinTemp - temperature in units of Kelvin.
      * @return the converted value
      */
     public double convertFromKelvin(double kelvinTemp);
     
     /**
-     * 
-     * @param rankineTemp temperature in units of Rankine
+     * Convert from Rankine to the desired unit.
+     * @param rankineTemp temperature in units of degrees Rankine.
      * @return the converted value
      */
     public double convertFromRankine(double rankineTemp);
