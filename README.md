@@ -1,5 +1,7 @@
-Temperature Converter
-=====================
+#Temperature Converter
 This stand-alone program will convert between Kelvin, Celcius, and Fahrenheit.
 
-Author Doug Chidester
+Author Douglas Chidester
+
+### Building
+Import the project into Eclipse to build it.

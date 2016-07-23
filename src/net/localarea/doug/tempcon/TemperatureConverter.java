@@ -18,18 +18,18 @@ package net.localarea.doug.tempcon;
  */
 public interface TemperatureConverter
 {
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromFahrenheit(double fromTemp);
+    /**
+     * @param fahrenheitTemp - temperature in units of degrees Fahrenheit.
+     */
+    public double convertFromFahrenheit(double fahrenheitTemp);
 
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromCelsius(double fromTemp);
+    /**
+     * @param celsiusTemp - temperature in units of degrees Celsius.
+     */
+    public double convertFromCelsius(double celsiusTemp);
 
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromKelvin(double fromTemp);
+    /**
+     * @param kelvinTemp - temperature in units of Kelvin.
+     */
+    public double convertFromKelvin(double kelvinTemp);
 }
