@@ -33,21 +33,36 @@ package net.localarea.doug.tempcon;
 
 public class KelvinConverter implements TemperatureConverter
 {
+	/**
+	 * KelvinConverter provides methods used to convert a temperature to
+	 * Kelvin.
+	 * 
+	 * @see TemperatureConverter
+	 */
     public KelvinConverter()
     {
         super();
     }
 
+    /**
+     * @see TemperatureConverter#convertFromFahrenheit(double)
+     */
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return (fahrenheitTemp + 459.67) * (5.0 / 9.0);
     }
 
+    /**
+     * @see TemperatureConverter#convertFromCelsius(double)
+     */
     public double convertFromCelsius(double celsiusTemp)
     {
         return celsiusTemp + 273.15;
     }
 
+    /**
+     * @see TemperatureConverter#convertFromKelvin(double)
+     */
     public double convertFromKelvin(double kelvinTemp)
     {
         return kelvinTemp;
