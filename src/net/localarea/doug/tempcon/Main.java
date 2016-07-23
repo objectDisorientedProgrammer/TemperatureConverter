@@ -45,7 +45,7 @@ public class Main
             @Override
             public void run()
             {
-                new Window();
+                new Window(); // launch the GUI
             }
         });
     }

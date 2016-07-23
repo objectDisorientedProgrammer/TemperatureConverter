@@ -35,24 +35,29 @@
 package net.localarea.doug.tempcon;
 
 /**
- * Interface for use as an abstract base class.
- * @author Doug
+ * This interface provides methods to convert from one temperature base to the
+ * desired temperature base.
+ * 
+ * @author Douglas Chidester
  *
  */
 public interface TemperatureConverter
 {
     /**
      * @param fahrenheitTemp - temperature in units of degrees Fahrenheit.
+     * @return the converted value
      */
     public double convertFromFahrenheit(double fahrenheitTemp);
 
     /**
      * @param celsiusTemp - temperature in units of degrees Celsius.
+     * @return the converted value
      */
     public double convertFromCelsius(double celsiusTemp);
 
     /**
      * @param kelvinTemp - temperature in units of Kelvin.
+     * @return the converted value
      */
     public double convertFromKelvin(double kelvinTemp);
 }

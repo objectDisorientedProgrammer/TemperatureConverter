@@ -67,7 +67,7 @@ public class Window extends JFrame
     
     private String choices[] = {"Farenheit", "Celcius", "Kelvin"};
     private String gettingStartedMsg = "Enter a temperature to convert, then press " +
-            "the enter\nkey or select a different temperature scale.";
+            "the enter\nkey or select a different temperature from the drop down menu.";
     
     TempChangeListener tcl;
     // GUI components

@@ -33,21 +33,36 @@ package net.localarea.doug.tempcon;
 
 public class FahrenheitConverter implements TemperatureConverter
 {
+	/**
+	 * FahrenheitConverter provides methods used to convert a temperature to
+	 * fahrenheit.
+	 * 
+	 * @see TemperatureConverter
+	 */
     public FahrenheitConverter()
     {
         super();
     }
-
+    
+    /**
+     * @see TemperatureConverter#convertFromFahrenheit(double)
+     */
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return fahrenheitTemp;
     }
 
+    /**
+     * @see TemperatureConverter#convertFromCelsius(double)
+     */
     public double convertFromCelsius(double celsiusTemp)
     {
         return (celsiusTemp * (9.0 / 5.0)) + 32.0;
     }
 
+    /**
+     * @see TemperatureConverter#convertFromKelvin(double)
+     */
     public double convertFromKelvin(double kelvinTemp)
     {
         return (kelvinTemp * (9.0 / 5.0)) - 459.67;
