@@ -31,25 +31,54 @@
 
 package net.localarea.doug.tempcon;
 
+/**
+ * @author Douglas Chidester
+ */
 public class KelvinConverter implements TemperatureConverter
 {
+	/**
+	 * KelvinConverter provides methods used to convert a temperature to
+	 * Kelvin.
+	 * 
+	 * @see TemperatureConverter
+	 */
     public KelvinConverter()
     {
         super();
     }
 
+    /* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
+	 */
+	@Override
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return (fahrenheitTemp + 459.67) * (5.0 / 9.0);
     }
 
+	/* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
+	 */
+	@Override
     public double convertFromCelsius(double celsiusTemp)
     {
         return celsiusTemp + 273.15;
     }
 
+    /* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
+	 */
+	@Override
     public double convertFromKelvin(double kelvinTemp)
     {
         return kelvinTemp;
     }
+
+	/* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
+	 */
+	@Override
+	public double convertFromRankine(double rankineTemp) {
+		return rankineTemp * (5.0 / 9.0);
+	}
 }

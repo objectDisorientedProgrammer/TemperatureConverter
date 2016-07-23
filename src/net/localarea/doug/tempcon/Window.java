@@ -31,6 +31,7 @@
 
 package net.localarea.doug.tempcon;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,20 +53,23 @@ import javax.swing.JTextField;
 public class Window extends JFrame
 {
     // variables
-    private static final String applicationName = "Temperature Converter";
-    private static final String version = "2.16.2";
-    private final static String author = "Douglas Chidester";
-    private static int frameWidth = 345;
-    private static int frameHeight = 160;
+    private final static String applicationName = "Temperature Converter";
+    private final String version = "2.17.0";
+    private final String author = "Douglas Chidester";
+    private final int frameWidth = 345;
+    private final int frameHeight = 180;
     private JPanel mainPanel;
-    
-    private TemperatureConverter tempCon;
     
     private DecimalFormat formatter;
     private String precision = "#.#####";   // number of decimal places
     private double temperature = 0.0;
     
-    private String choices[] = {"Farenheit", "Celcius", "Kelvin"};
+    private String choices[] = { "Fahrenheit", "Celsius", "Kelvin", "Rankine" };
+    private final int FAHRENHEIT = 0;
+    private final int CELSIUS    = 1;
+    private final int KELVIN     = 2;
+    private final int RANKINE    = 3;
+    
     private String gettingStartedMsg = "Enter a temperature to convert, then press " +
             "the enter\nkey or select a different temperature from the drop down menu.";
     
@@ -89,7 +93,7 @@ public class Window extends JFrame
         super(applicationName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(frameWidth, frameHeight);
-        setLocationRelativeTo(null);        // set frame location to center of screen
+        setLocationRelativeTo(null); // set frame location to center of screen
         
         formatter = new DecimalFormat(precision);
         
@@ -98,7 +102,7 @@ public class Window extends JFrame
         addComponentsToPanel();
         createMenubar();
         //pack();
-        setVisible(true);   // display
+        setVisible(true); // display
     }
 
     /**
@@ -123,29 +127,35 @@ public class Window extends JFrame
     {
         int rows = 3;
         int columns = 2;
-        int vSpacing = 5;
-        int hSpacing = 5;
+        int vSpacing = 10;
+        int hSpacing = 10;
         mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
         
         tcl = new TempChangeListener();
         
+        Font uiFont = new Font(Font.DIALOG, Font.BOLD, 14);
+        
         // label to go with temperatureInputTF
-        fromLbl = new JLabel("From", null, JLabel.CENTER); 
+        fromLbl = new JLabel("From", null, JLabel.CENTER);
+        fromLbl.setFont(uiFont);
         
         // label to go with temperatureResultTF
-        toLbl = new JLabel("To", null, JLabel.CENTER); 
+        toLbl = new JLabel("To", null, JLabel.CENTER);
+        toLbl.setFont(uiFont);
         
         // temperatureInputTF
         temperatureInputTF = new JTextField(8);
         temperatureInputTF.setText("" + 0.0f);
         temperatureInputTF.setHorizontalAlignment(JTextField.CENTER);
         temperatureInputTF.addActionListener(tcl);
+        temperatureInputTF.setFont(uiFont);
         
         // temperatureResultTF
         temperatureResultTF = new JTextField(10);
         temperatureResultTF.setText("-17.77778");
         temperatureResultTF.setEditable(false);
         temperatureResultTF.setHorizontalAlignment(JTextField.CENTER);
+        temperatureResultTF.setFont(uiFont);
         
         // add comboboxes
         fromTemperature = new JComboBox<String>(choices);
@@ -153,12 +163,14 @@ public class Window extends JFrame
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
         fromTemperature.addActionListener(tcl);
+        fromTemperature.setFont(uiFont);
         
         toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
         toTemperature.addActionListener(tcl);
+        toTemperature.setFont(uiFont);
     }
     
     /**
@@ -188,7 +200,8 @@ public class Window extends JFrame
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
         
-        menuItemExit = new JMenuItem("Exit", new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
+        menuItemExit = new JMenuItem("Exit",
+        		new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
         menuItemExit.setMnemonic(KeyEvent.VK_E);
         menuItemExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -201,14 +214,16 @@ public class Window extends JFrame
         helpMenu.setMnemonic(KeyEvent.VK_H);
         menuBar.add(helpMenu);
         
-        menuItemGettingStarted = new JMenuItem("Getting Started", new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
+        menuItemGettingStarted = new JMenuItem("Getting Started",
+        		new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
         menuItemGettingStarted.setMnemonic(KeyEvent.VK_G);
         menuItemGettingStarted.setToolTipText("Basic useage instructions");
         menuItemGettingStarted.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // show basic use instructions if user clicks: Help -> Getting Started
                 JOptionPane.showMessageDialog(null, gettingStartedMsg, "Getting Started",
-                        JOptionPane.PLAIN_MESSAGE, new ImageIcon(this.getClass().getResource(imagePath+"help64.png")));
+                        JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon(this.getClass().getResource(imagePath+"help64.png")));
             }
         });
         helpMenu.add(menuItemGettingStarted);
@@ -220,7 +235,8 @@ public class Window extends JFrame
             public void actionPerformed(ActionEvent e) {
                 // show credits & version if user clicks: Help -> About
                 JOptionPane.showMessageDialog(null, "Created by " + author + "\nVersion " + version, "About",
-                        JOptionPane.INFORMATION_MESSAGE, new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
+                        JOptionPane.INFORMATION_MESSAGE,
+                        new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
             }
         });
         helpMenu.add(menuItemAbout);
@@ -231,40 +247,47 @@ public class Window extends JFrame
      */
     private void updateResultTF()
     {
-        // To farenheit cases
-        tempCon = new FahrenheitConverter();
-        // case of                      farenheit               to              farenheit
-        if(fromTemperature.getSelectedItem().equals(choices[0]) && toTemperature.getSelectedItem().equals(choices[0]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
-        // case of                      celcius                 to              farenheit
-        if(fromTemperature.getSelectedItem().equals(choices[1]) && toTemperature.getSelectedItem().equals(choices[0]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
-        // case of                      Kelvin                  to              farenheit
-        if(fromTemperature.getSelectedItem().equals(choices[2]) && toTemperature.getSelectedItem().equals(choices[0]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
-
-        // To celcius cases
-        tempCon = new CelsiusConverter();
-        // case of                      farenheit               to              celcius
-        if(fromTemperature.getSelectedItem().equals(choices[0]) && toTemperature.getSelectedItem().equals(choices[1]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
-        // case of                      celcius                 to              celcius
-        if(fromTemperature.getSelectedItem().equals(choices[1]) && toTemperature.getSelectedItem().equals(choices[1]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
-        // case of                      Kelvin                  to              celcius
-        if(fromTemperature.getSelectedItem().equals(choices[2]) && toTemperature.getSelectedItem().equals(choices[1]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
-
-        // To Kelvin cases
-        tempCon = new KelvinConverter();
-        // case of                      farenheit               to              Kelvin
-        if(fromTemperature.getSelectedItem().equals(choices[0]) && toTemperature.getSelectedItem().equals(choices[2]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
-        // case of                      celcius                 to              Kelvin
-        if(fromTemperature.getSelectedItem().equals(choices[1]) && toTemperature.getSelectedItem().equals(choices[2]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
-        // case of                      Kelvin                  to              Kelvin
-        if(fromTemperature.getSelectedItem().equals(choices[2]) && toTemperature.getSelectedItem().equals(choices[2]) )
-            temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
+    	TemperatureConverter tempCon = null;
+    	
+    	// determine which temperature to convert to
+    	switch(toTemperature.getSelectedIndex())
+    	{
+    		case FAHRENHEIT:
+    			tempCon = new FahrenheitConverter();
+    			break;
+    		case CELSIUS:
+    			tempCon = new CelsiusConverter();
+    			break;
+    		case KELVIN:
+    			tempCon = new KelvinConverter();
+    			break;
+    		case RANKINE:
+    			tempCon = new RankineConverter();
+    			break;
+    		default:
+    			break;
+    	}
+    	
+    	if(tempCon != null)
+    	{
+    		// determine which temperature to convert from
+    		switch(fromTemperature.getSelectedIndex())
+    		{
+    		case FAHRENHEIT:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
+    			break;
+    		case CELSIUS:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
+    			break;
+    		case KELVIN:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
+    			break;
+    		case RANKINE:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
+    			break;
+    		default:
+    			break;
+    		}
+    	}
     }
 }
