@@ -53,11 +53,11 @@ import javax.swing.JTextField;
 public class Window extends JFrame
 {
     // variables
-    private static final String applicationName = "Temperature Converter";
-    private static final String version = "2.17.0";
-    private final static String author = "Douglas Chidester";
-    private static int frameWidth = 345;
-    private static int frameHeight = 180;
+    private final static String applicationName = "Temperature Converter";
+    private final String version = "2.17.0";
+    private final String author = "Douglas Chidester";
+    private final int frameWidth = 345;
+    private final int frameHeight = 180;
     private JPanel mainPanel;
     
     private DecimalFormat formatter;
@@ -65,7 +65,11 @@ public class Window extends JFrame
     private double temperature = 0.0;
     
     private String choices[] = { "Fahrenheit", "Celsius", "Kelvin", "Rankine" };
-    //private enum TemperatureEnum { Fahrenheit, Celsius, Kelvin, Rankine };
+    private final int FAHRENHEIT = 0;
+    private final int CELSIUS    = 1;
+    private final int KELVIN     = 2;
+    private final int RANKINE    = 3;
+    
     private String gettingStartedMsg = "Enter a temperature to convert, then press " +
             "the enter\nkey or select a different temperature from the drop down menu.";
     
@@ -248,16 +252,16 @@ public class Window extends JFrame
     	// determine which temperature to convert to
     	switch(toTemperature.getSelectedIndex())
     	{
-    		case 0:
+    		case FAHRENHEIT:
     			tempCon = new FahrenheitConverter();
     			break;
-    		case 1:
+    		case CELSIUS:
     			tempCon = new CelsiusConverter();
     			break;
-    		case 2:
+    		case KELVIN:
     			tempCon = new KelvinConverter();
     			break;
-    		case 3:
+    		case RANKINE:
     			tempCon = new RankineConverter();
     			break;
     		default:
@@ -269,16 +273,16 @@ public class Window extends JFrame
     		// determine which temperature to convert from
     		switch(fromTemperature.getSelectedIndex())
     		{
-    		case 0:
+    		case FAHRENHEIT:
     			temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
     			break;
-    		case 1:
+    		case CELSIUS:
     			temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
     			break;
-    		case 2:
+    		case KELVIN:
     			temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
     			break;
-    		case 3:
+    		case RANKINE:
     			temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
     			break;
     		default:
