@@ -49,7 +49,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromCelsius(double celsiusTemp) {
-		return (celsiusTemp + 273.15) * (9 / 5);
+		return (celsiusTemp + 273.15) * (9.0 / 5.0);
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +57,7 @@ public class RankineConverter implements TemperatureConverter {
 	 */
 	@Override
 	public double convertFromKelvin(double kelvinTemp) {
-		return kelvinTemp * ( 9 / 5);
+		return kelvinTemp * ( 9.0 / 5.0);
 	}
 
 	/* (non-Javadoc)

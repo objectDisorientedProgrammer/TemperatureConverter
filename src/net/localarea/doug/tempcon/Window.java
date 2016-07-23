@@ -54,7 +54,7 @@ public class Window extends JFrame
 {
     // variables
     private static final String applicationName = "Temperature Converter";
-    private static final String version = "2.16.3";
+    private static final String version = "2.17.0";
     private final static String author = "Douglas Chidester";
     private static int frameWidth = 345;
     private static int frameHeight = 180;
@@ -246,27 +246,44 @@ public class Window extends JFrame
     	TemperatureConverter tempCon = null;
     	
     	// determine which temperature to convert to
-    	if(toTemperature.getSelectedItem().equals(choices[0])) // To farenheit
+    	switch(toTemperature.getSelectedIndex())
     	{
-    		tempCon = new FahrenheitConverter();
+    		case 0:
+    			tempCon = new FahrenheitConverter();
+    			break;
+    		case 1:
+    			tempCon = new CelsiusConverter();
+    			break;
+    		case 2:
+    			tempCon = new KelvinConverter();
+    			break;
+    		case 3:
+    			tempCon = new RankineConverter();
+    			break;
+    		default:
+    			break;
     	}
-    	else if(toTemperature.getSelectedItem().equals(choices[1])) // To celcius
-    	{
-    		tempCon = new CelsiusConverter();
-    	}
-    	else if(toTemperature.getSelectedItem().equals(choices[2])) // To Kelvin
-    	{
-    		tempCon = new KelvinConverter();
-    	}
-    	// TODO rankine
     	
-    	// determine which temperature to convert from
-    	if(fromTemperature.getSelectedItem().equals(choices[0]))
-    		temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
-    	else if(fromTemperature.getSelectedItem().equals(choices[1]))
-    		temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
-    	else if(fromTemperature.getSelectedItem().equals(choices[2]))
-    		temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
-    	// TODO rankine
+    	if(tempCon != null)
+    	{
+    		// determine which temperature to convert from
+    		switch(fromTemperature.getSelectedIndex())
+    		{
+    		case 0:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
+    			break;
+    		case 1:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
+    			break;
+    		case 2:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
+    			break;
+    		case 3:
+    			temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
+    			break;
+    		default:
+    			break;
+    		}
+    	}
     }
 }

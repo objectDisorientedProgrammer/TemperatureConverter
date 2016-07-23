@@ -79,7 +79,6 @@ public class FahrenheitConverter implements TemperatureConverter
 	 */
 	@Override
 	public double convertFromRankine(double rankineTemp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return rankineTemp - 459.67;
 	}
 }
