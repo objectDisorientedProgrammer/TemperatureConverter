@@ -54,13 +54,11 @@ public class Window extends JFrame
 {
     // variables
     private static final String applicationName = "Temperature Converter";
-    private static final String version = "2.16.2";
+    private static final String version = "2.16.3";
     private final static String author = "Douglas Chidester";
     private static int frameWidth = 345;
-    private static int frameHeight = 160;
+    private static int frameHeight = 180;
     private JPanel mainPanel;
-    
-    
     
     private DecimalFormat formatter;
     private String precision = "#.#####";   // number of decimal places
@@ -91,7 +89,7 @@ public class Window extends JFrame
         super(applicationName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(frameWidth, frameHeight);
-        setLocationRelativeTo(null);        // set frame location to center of screen
+        setLocationRelativeTo(null); // set frame location to center of screen
         
         formatter = new DecimalFormat(precision);
         
@@ -100,7 +98,7 @@ public class Window extends JFrame
         addComponentsToPanel();
         createMenubar();
         //pack();
-        setVisible(true);   // display
+        setVisible(true); // display
     }
 
     /**
@@ -125,8 +123,8 @@ public class Window extends JFrame
     {
         int rows = 3;
         int columns = 2;
-        int vSpacing = 5;
-        int hSpacing = 5;
+        int vSpacing = 10;
+        int hSpacing = 10;
         mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
         
         tcl = new TempChangeListener();
