@@ -31,6 +31,9 @@
 
 package net.localarea.doug.tempcon;
 
+/**
+ * @author Douglas Chidester
+ */
 public class KelvinConverter implements TemperatureConverter
 {
 	/**
@@ -44,27 +47,39 @@ public class KelvinConverter implements TemperatureConverter
         super();
     }
 
-    /**
-     * @see TemperatureConverter#convertFromFahrenheit(double)
-     */
+    /* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
+	 */
+	@Override
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return (fahrenheitTemp + 459.67) * (5.0 / 9.0);
     }
 
-    /**
-     * @see TemperatureConverter#convertFromCelsius(double)
-     */
+	/* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
+	 */
+	@Override
     public double convertFromCelsius(double celsiusTemp)
     {
         return celsiusTemp + 273.15;
     }
 
-    /**
-     * @see TemperatureConverter#convertFromKelvin(double)
-     */
+    /* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
+	 */
+	@Override
     public double convertFromKelvin(double kelvinTemp)
     {
         return kelvinTemp;
     }
+
+	/* (non-Javadoc)
+	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
+	 */
+	@Override
+	public double convertFromRankine(double rankineTemp) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

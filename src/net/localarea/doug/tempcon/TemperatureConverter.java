@@ -60,4 +60,11 @@ public interface TemperatureConverter
      * @return the converted value
      */
     public double convertFromKelvin(double kelvinTemp);
+    
+    /**
+     * 
+     * @param rankineTemp temperature in units of Rankine
+     * @return the converted value
+     */
+    public double convertFromRankine(double rankineTemp);
 }
