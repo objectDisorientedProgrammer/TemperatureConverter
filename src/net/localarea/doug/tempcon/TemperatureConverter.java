@@ -7,29 +7,57 @@
  * 
  * Last Update:
  * [6/12/13] - changed TemperatureConverter from an abstract class to an interface.
+ * 
+ * MIT License
+ * 
+ * Copyright (c) 2013 Douglas Chidester
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  */
 
 package net.localarea.doug.tempcon;
 
 /**
- * Interface for use as an abstract base class.
- * @author Doug
+ * This interface provides methods to convert from one temperature base to the
+ * desired temperature base.
+ * 
+ * @author Douglas Chidester
  *
  */
 public interface TemperatureConverter
 {
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromFahrenheit(double fromTemp);
+    /**
+     * @param fahrenheitTemp - temperature in units of degrees Fahrenheit.
+     * @return the converted value
+     */
+    public double convertFromFahrenheit(double fahrenheitTemp);
 
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromCelsius(double fromTemp);
+    /**
+     * @param celsiusTemp - temperature in units of degrees Celsius.
+     * @return the converted value
+     */
+    public double convertFromCelsius(double celsiusTemp);
 
-	/**
-	 * @param fromTemp - number to convert
-	 */
-	public double convertFromKelvin(double fromTemp);
+    /**
+     * @param kelvinTemp - temperature in units of Kelvin.
+     * @return the converted value
+     */
+    public double convertFromKelvin(double kelvinTemp);
 }
