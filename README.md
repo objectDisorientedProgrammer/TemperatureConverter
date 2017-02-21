@@ -11,13 +11,17 @@ Java version 1.6 and above is installed.
 Double click the .jar file to run the program.
 #### Mac - TODO
 #### Linux
-Double click the .jar file to run the program. If this does not work, you may need to make the file executable:
+Double click the .jar file to run the program.
 
-    chmod +x <filename>.jar
+If this does not work, you may need to make the file executable:
+
+    chmod +x TemperatureConverter-vX.Y.Z.jar
+    
+where X.Y.Z is the version you downloaded.
 
 You can also run through the command line:
     
-    java -jar <filename>.jar
+    java -jar TemperatureConverter-vX.Y.Z.jar
 
 ### Building
 Import the project into Eclipse to build it.
