@@ -73,6 +73,23 @@ public class Window extends JFrame
     private String gettingStartedMsg = "Enter a temperature to convert, then press " +
             "the enter\nkey or select a different temperature from the drop down menu.";
     
+    private String licenseString = "MIT License\n\nCopyright (c) 2013 Douglas Chidester\n\n" +
+            "Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
+            "of this software and associated documentation files (the \"Software\"), to deal\n" +
+            "in the Software without restriction, including without limitation the rights\n" +
+            "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" +
+            "copies of the Software, and to permit persons to whom the Software is\n" +
+            "furnished to do so, subject to the following conditions:\n\n" +
+            "The above copyright notice and this permission notice shall be included in all\n" +
+            "copies or substantial portions of the Software.\n\n" +
+            "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+            "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+            "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+            "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+            "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+            "SOFTWARE.";
+    
     TempChangeListener tcl;
     // GUI components
     private JTextField temperatureInputTF;
@@ -197,7 +214,6 @@ public class Window extends JFrame
         
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        menuBar.add(fileMenu);
         
         menuItemExit = new JMenuItem("Exit",
         		new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
@@ -207,11 +223,9 @@ public class Window extends JFrame
                 dispose(); // close program if user clicks: File -> Exit
             }
         });
-        fileMenu.add(menuItemExit);
         
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
-        menuBar.add(helpMenu);
         
         menuItemGettingStarted = new JMenuItem("Getting Started",
         		new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
@@ -225,7 +239,16 @@ public class Window extends JFrame
                         new ImageIcon(this.getClass().getResource(imagePath+"help64.png")));
             }
         });
-        helpMenu.add(menuItemGettingStarted);
+        
+        JMenuItem license = new JMenuItem("License");
+        license.setMnemonic(KeyEvent.VK_L);
+        license.setToolTipText("Display software license");
+        license.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JOptionPane.showMessageDialog(null, licenseString, "License", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
         
         menuItemAbout = new JMenuItem("About", new ImageIcon(this.getClass().getResource(imagePath+"about.png")));
         menuItemAbout.setMnemonic(KeyEvent.VK_A);
@@ -238,6 +261,15 @@ public class Window extends JFrame
                         new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
             }
         });
+        
+        // add file menu
+        menuBar.add(fileMenu);
+        fileMenu.add(menuItemExit);
+        
+        // add help menu
+        menuBar.add(helpMenu);
+        helpMenu.add(menuItemGettingStarted);
+        helpMenu.add(license);
         helpMenu.add(menuItemAbout);
     }
     
