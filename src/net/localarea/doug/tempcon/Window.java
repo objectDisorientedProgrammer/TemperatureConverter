@@ -54,14 +54,14 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.17.0";
+    private final String version = "2.17.1";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
     private JPanel mainPanel;
     
     private DecimalFormat formatter;
-    private String precision = "#.#####";   // number of decimal places
+    private String precision = "#.##";   // number of decimal places
     private double temperature = 0.0;
     
     private String choices[] = { "Fahrenheit", "Celsius", "Kelvin", "Rankine" };
@@ -79,8 +79,8 @@ public class Window extends JFrame
     private JTextField temperatureResultTF;
     private JLabel fromLbl;
     private JLabel toLbl;
-    private JComboBox<String> fromTemperature;
-    private JComboBox<String> toTemperature;
+    private JComboBox fromTemperature;
+    private JComboBox toTemperature;
     private JMenuItem menuItemAbout;
     private JMenuItem menuItemExit;
     private JMenuItem menuItemGettingStarted;
@@ -101,7 +101,6 @@ public class Window extends JFrame
         createGUI();
         addComponentsToPanel();
         createMenubar();
-        //pack();
         setVisible(true); // display
     }
 
@@ -152,20 +151,20 @@ public class Window extends JFrame
         
         // temperatureResultTF
         temperatureResultTF = new JTextField(10);
-        temperatureResultTF.setText("-17.77778");
+        temperatureResultTF.setText("-17.78");
         temperatureResultTF.setEditable(false);
         temperatureResultTF.setHorizontalAlignment(JTextField.CENTER);
         temperatureResultTF.setFont(uiFont);
         
         // add comboboxes
-        fromTemperature = new JComboBox<String>(choices);
+        fromTemperature = new JComboBox(choices);
         fromTemperature.setEditable(false);
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
         fromTemperature.addActionListener(tcl);
         fromTemperature.setFont(uiFont);
         
-        toTemperature = new JComboBox<String>(choices);
+        toTemperature = new JComboBox(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
