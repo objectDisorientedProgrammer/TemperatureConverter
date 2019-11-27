@@ -1,27 +1,28 @@
 # Temperature Converter
-This stand-alone program will convert between Kelvin, Celcius, Rankine, and Fahrenheit.
+This desktop application converts between Kelvin, Celcius, Rankine, and Fahrenheit temperature scales.
 
 Author Douglas Chidester
 
 ## Requirements
-Java version 1.6 and above is installed.
+Java 11 must be installed.
 
-## Running
+## Running the program
 #### Windows
 Double click the .jar file to run the program.
-#### Mac - TODO
+
+#### Mac
+See instructions for Linux.
+
 #### Linux
 Double click the .jar file to run the program.
 
 If this does not work, you may need to make the file executable:
 
-    chmod +x TemperatureConverter-vX.Y.Z.jar
-    
-where X.Y.Z is the version you downloaded.
+    chmod +x TemperatureConverter.jar
 
 You can also run through the command line:
     
-    java -jar TemperatureConverter-vX.Y.Z.jar
+    java -jar TemperatureConverter.jar
 
 ### Building
 Import the project into Eclipse to build it.
