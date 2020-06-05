@@ -36,49 +36,50 @@ package net.localarea.doug.tempcon;
  */
 public class CelsiusConverter implements TemperatureConverter
 {
-	/**
-	 * CelsiusConverter provides methods used to convert a temperature to
-	 * celsius.
-	 * 
-	 * @see TemperatureConverter
-	 */
+    /**
+     * CelsiusConverter provides methods used to convert a temperature to
+     * celsius.
+     * 
+     * @see TemperatureConverter
+     */
     public CelsiusConverter()
     {
         super();
     }
 
     /* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
-	 */
-	@Override
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
+     */
+    @Override
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return (fahrenheitTemp - 32.0) * (5.0 / 9.0);
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
-	 */
-	@Override
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
+     */
+    @Override
     public double convertFromCelsius(double celsiusTemp)
     {
         return celsiusTemp;
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
-	 */
-	@Override
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
+     */
+    @Override
     public double convertFromKelvin(double kelvinTemp)
     {
         return kelvinTemp - 273.15;
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
-	 */
-	@Override
-	public double convertFromRankine(double rankineTemp) {
-		return (rankineTemp - 491.67) * (5.0 / 9.0);
-	}
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
+     */
+    @Override
+    public double convertFromRankine(double rankineTemp)
+    {
+        return (rankineTemp - 491.67) * (5.0 / 9.0);
+    }
 }

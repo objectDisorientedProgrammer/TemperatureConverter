@@ -36,49 +36,50 @@ package net.localarea.doug.tempcon;
  */
 public class FahrenheitConverter implements TemperatureConverter
 {
-	/**
-	 * FahrenheitConverter provides methods used to convert a temperature to
-	 * fahrenheit.
-	 * 
-	 * @see TemperatureConverter
-	 */
+    /**
+     * FahrenheitConverter provides methods used to convert a temperature to
+     * fahrenheit.
+     * 
+     * @see TemperatureConverter
+     */
     public FahrenheitConverter()
     {
         super();
     }
     
     /* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
-	 */
-	@Override
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
+     */
+    @Override
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
         return fahrenheitTemp;
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
-	 */
-	@Override
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
+     */
+    @Override
     public double convertFromCelsius(double celsiusTemp)
     {
         return (celsiusTemp * (9.0 / 5.0)) + 32.0;
     }
 
     /* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
-	 */
-	@Override
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
+     */
+    @Override
     public double convertFromKelvin(double kelvinTemp)
     {
         return (kelvinTemp * (9.0 / 5.0)) - 459.67;
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
-	 */
-	@Override
-	public double convertFromRankine(double rankineTemp) {
-		return rankineTemp - 459.67;
-	}
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
+     */
+    @Override
+    public double convertFromRankine(double rankineTemp)
+    {
+        return rankineTemp - 459.67;
+    }
 }

@@ -54,7 +54,7 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.17.1";
+    private final String version = "2.17.2";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -216,7 +216,7 @@ public class Window extends JFrame
         fileMenu.setMnemonic(KeyEvent.VK_F);
         
         menuItemExit = new JMenuItem("Exit",
-        		new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
+                new ImageIcon(this.getClass().getResource(imagePath+"exit.png")));
         menuItemExit.setMnemonic(KeyEvent.VK_E);
         menuItemExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -228,7 +228,7 @@ public class Window extends JFrame
         helpMenu.setMnemonic(KeyEvent.VK_H);
         
         menuItemGettingStarted = new JMenuItem("Getting Started",
-        		new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
+                new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
         menuItemGettingStarted.setMnemonic(KeyEvent.VK_G);
         menuItemGettingStarted.setToolTipText("Basic useage instructions");
         menuItemGettingStarted.addActionListener(new ActionListener() {
@@ -244,11 +244,11 @@ public class Window extends JFrame
         license.setMnemonic(KeyEvent.VK_L);
         license.setToolTipText("Display software license");
         license.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				JOptionPane.showMessageDialog(null, licenseString, "License", JOptionPane.PLAIN_MESSAGE);
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                JOptionPane.showMessageDialog(null, licenseString, "License", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
         
         menuItemAbout = new JMenuItem("About", new ImageIcon(this.getClass().getResource(imagePath+"about.png")));
         menuItemAbout.setMnemonic(KeyEvent.VK_A);
@@ -278,47 +278,47 @@ public class Window extends JFrame
      */
     private void updateResultTF()
     {
-    	TemperatureConverter tempCon = null;
-    	
-    	// determine which temperature to convert to
-    	switch(toTemperature.getSelectedIndex())
-    	{
-    		case FAHRENHEIT:
-    			tempCon = new FahrenheitConverter();
-    			break;
-    		case CELSIUS:
-    			tempCon = new CelsiusConverter();
-    			break;
-    		case KELVIN:
-    			tempCon = new KelvinConverter();
-    			break;
-    		case RANKINE:
-    			tempCon = new RankineConverter();
-    			break;
-    		default:
-    			break;
-    	}
-    	
-    	if(tempCon != null)
-    	{
-    		// determine which temperature to convert from
-    		switch(fromTemperature.getSelectedIndex())
-    		{
-    		case FAHRENHEIT:
-    			temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
-    			break;
-    		case CELSIUS:
-    			temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
-    			break;
-    		case KELVIN:
-    			temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
-    			break;
-    		case RANKINE:
-    			temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
-    			break;
-    		default:
-    			break;
-    		}
-    	}
+        TemperatureConverter tempCon = null;
+        
+        // determine which temperature to convert to
+        switch(toTemperature.getSelectedIndex())
+        {
+            case FAHRENHEIT:
+                tempCon = new FahrenheitConverter();
+                break;
+            case CELSIUS:
+                tempCon = new CelsiusConverter();
+                break;
+            case KELVIN:
+                tempCon = new KelvinConverter();
+                break;
+            case RANKINE:
+                tempCon = new RankineConverter();
+                break;
+            default:
+                break;
+        }
+        
+        if(tempCon != null)
+        {
+            // determine which temperature to convert from
+            switch(fromTemperature.getSelectedIndex())
+            {
+            case FAHRENHEIT:
+                temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
+                break;
+            case CELSIUS:
+                temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
+                break;
+            case KELVIN:
+                temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
+                break;
+            case RANKINE:
+                temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
+                break;
+            default:
+                break;
+            }
+        }
     }
 }
