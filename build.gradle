@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'net.localarea.doug.tempcon.Main'
+
+// change compiler flags here
+compileJava {
+    options.compilerArgs += ["-Xlint:deprecation"]
+}
+
+// TODO #8 add JUnit at some point
+    // https://github.com/objectDisorientedProgrammer/TemperatureConverter/issues/8
+/*repositories {
+    mavenCentral()
+}
+
+configurations {
+    deps // configuration that holds jars to include in the jar
+}
+
+dependencies {
+    
+}*/
+
+jar {
+    baseName = 'TemperatureConverter'
+    manifest {
+        attributes 'Main-Class': 'net.localarea.doug.tempcon.Main'
+    }
+}
+

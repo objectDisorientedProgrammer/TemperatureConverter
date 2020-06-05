@@ -5,9 +5,6 @@
  * 
  * This is an interface to use as a base for the other temperature converter classes.
  * 
- * Last Update:
- * [6/12/13] - changed TemperatureConverter from an abstract class to an interface.
- * 
  * MIT License
  * 
  * Copyright (c) 2013 Douglas Chidester

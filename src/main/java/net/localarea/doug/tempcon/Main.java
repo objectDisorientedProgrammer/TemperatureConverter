@@ -1,13 +1,15 @@
-/* RankineConverter.java
+/* Main.java
  * 
  * Author: Douglas Chidester
- * created July 23, 2016
+ * created February 14, 2013
  * 
- * Converts from a temperature scale to the Rankine scale.
+ * A new attempt at a better temperature converter using a more object-oriented approach.
+ * 
+ * See Window.java for more documentation.
  * 
  * MIT License
  * 
- * Copyright (c) 2016 Douglas Chidester
+ * Copyright (c) 2013 Douglas Chidester
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,41 +33,19 @@
 
 package net.localarea.doug.tempcon;
 
-/**
- * @author Douglas Chidester
- */
-public class RankineConverter implements TemperatureConverter {
+import javax.swing.SwingUtilities;
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
-	 */
-	@Override
-	public double convertFromFahrenheit(double fahrenheitTemp) {
-		return fahrenheitTemp + 459.67;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
-	 */
-	@Override
-	public double convertFromCelsius(double celsiusTemp) {
-		return (celsiusTemp + 273.15) * (9.0 / 5.0);
-	}
-
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
-	 */
-	@Override
-	public double convertFromKelvin(double kelvinTemp) {
-		return kelvinTemp * ( 9.0 / 5.0);
-	}
-
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
-	 */
-	@Override
-	public double convertFromRankine(double rankineTemp) {
-		return rankineTemp;
-	}
-
+public class Main
+{
+    public static void main(String args[])
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                new Window(); // launch the GUI
+            }
+        });
+    }
 }

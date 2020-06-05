@@ -1,13 +1,13 @@
-/* FahrenheitConverter.java
+/* RankineConverter.java
  * 
  * Author: Douglas Chidester
- * created February 14, 2013
+ * created July 23, 2016
  * 
- * Converts from a temperature scale to the Fahrenheit scale.
+ * Converts from a temperature scale to the Rankine scale.
  * 
  * MIT License
  * 
- * Copyright (c) 2013 Douglas Chidester
+ * Copyright (c) 2016 Douglas Chidester
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,51 +34,41 @@ package net.localarea.doug.tempcon;
 /**
  * @author Douglas Chidester
  */
-public class FahrenheitConverter implements TemperatureConverter
+public class RankineConverter implements TemperatureConverter
 {
-	/**
-	 * FahrenheitConverter provides methods used to convert a temperature to
-	 * fahrenheit.
-	 * 
-	 * @see TemperatureConverter
-	 */
-    public FahrenheitConverter()
-    {
-        super();
-    }
-    
     /* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
-	 */
-	@Override
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromFahrenheit(double)
+     */
+    @Override
     public double convertFromFahrenheit(double fahrenheitTemp)
     {
-        return fahrenheitTemp;
-    }
-
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
-	 */
-	@Override
-    public double convertFromCelsius(double celsiusTemp)
-    {
-        return (celsiusTemp * (9.0 / 5.0)) + 32.0;
+        return fahrenheitTemp + 459.67;
     }
 
     /* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
-	 */
-	@Override
-    public double convertFromKelvin(double kelvinTemp)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromCelsius(double)
+     */
+    @Override
+    public double convertFromCelsius(double celsiusTemp)
     {
-        return (kelvinTemp * (9.0 / 5.0)) - 459.67;
+        return (celsiusTemp + 273.15) * (9.0 / 5.0);
     }
 
-	/* (non-Javadoc)
-	 * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
-	 */
-	@Override
-	public double convertFromRankine(double rankineTemp) {
-		return rankineTemp - 459.67;
-	}
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromKelvin(double)
+     */
+    @Override
+    public double convertFromKelvin(double kelvinTemp)
+    {
+        return kelvinTemp * ( 9.0 / 5.0);
+    }
+
+    /* (non-Javadoc)
+     * @see net.localarea.doug.tempcon.TemperatureConverter#convertFromRankine(double)
+     */
+    @Override
+    public double convertFromRankine(double rankineTemp)
+    {
+        return rankineTemp;
+    }
 }
