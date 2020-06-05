@@ -96,8 +96,8 @@ public class Window extends JFrame
     private JTextField temperatureResultTF;
     private JLabel fromLbl;
     private JLabel toLbl;
-    private JComboBox fromTemperature;
-    private JComboBox toTemperature;
+    private JComboBox<String> fromTemperature;
+    private JComboBox<String> toTemperature;
     private JMenuItem menuItemAbout;
     private JMenuItem menuItemExit;
     private JMenuItem menuItemGettingStarted;
@@ -174,14 +174,14 @@ public class Window extends JFrame
         temperatureResultTF.setFont(uiFont);
         
         // add comboboxes
-        fromTemperature = new JComboBox(choices);
+        fromTemperature = new JComboBox<String>(choices);
         fromTemperature.setEditable(false);
         fromTemperature.setSelectedItem(choices[0]);
         fromTemperature.setMaximumRowCount(3);
         fromTemperature.addActionListener(tcl);
         fromTemperature.setFont(uiFont);
         
-        toTemperature = new JComboBox(choices);
+        toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
         toTemperature.setMaximumRowCount(3);
