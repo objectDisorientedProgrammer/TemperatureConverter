@@ -3,8 +3,22 @@ This desktop application converts between Kelvin, Celcius, Rankine, and Fahrenhe
 
 Author Douglas Chidester
 
-## Requirements
-Java 11 must be installed.
+## Dependencies
+* Java 11
+* gradle 4.4.1+
+
+## Building
+This project uses Gradle as a build system.
+
+To build:
+
+    gradle build
+
+To clean:
+
+    gradle clean
+    
+Default jar output path is: `build/libs/`
 
 ## Running the program
 #### Windows
@@ -23,9 +37,4 @@ If this does not work, you may need to make the file executable:
 You can also run through the command line:
     
     java -jar TemperatureConverter.jar
-
-### Building
-Import the project into Eclipse to build it.
-
-Works with version: Mars.1 Release (4.5.1) and earlier.
 
