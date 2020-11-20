@@ -21,11 +21,7 @@ To clean:
 Default jar output path is: `build/libs/`
 
 ## Running the program
-#### Windows
-Double click the .jar file to run the program.
-
-#### Mac
-See instructions for Linux.
+You can use `gradle run` from a command line interface or any of the following options when executing the jar file directly.
 
 #### Linux
 Double click the .jar file to run the program.
@@ -38,3 +34,8 @@ You can also run through the command line:
     
     java -jar TemperatureConverter.jar
 
+#### Mac
+See instructions for Linux.
+
+#### Windows
+Double click the .jar file to run the program.
