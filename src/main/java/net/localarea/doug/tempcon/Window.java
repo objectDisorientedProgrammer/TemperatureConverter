@@ -54,7 +54,7 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.17.2";
+    private final String version = "2.17.3";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -119,6 +119,11 @@ public class Window extends JFrame
         addComponentsToPanel();
         createMenubar();
         setVisible(true); // display
+    }
+    
+    public JFrame getMainWindow()
+    {
+        return this;
     }
 
     /**
@@ -234,7 +239,7 @@ public class Window extends JFrame
         menuItemGettingStarted.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // show basic use instructions if user clicks: Help -> Getting Started
-                JOptionPane.showMessageDialog(null, gettingStartedMsg, "Getting Started",
+                JOptionPane.showMessageDialog(getMainWindow(), gettingStartedMsg, "Getting Started",
                         JOptionPane.PLAIN_MESSAGE,
                         new ImageIcon(this.getClass().getResource(imagePath+"help64.png")));
             }
@@ -246,7 +251,7 @@ public class Window extends JFrame
         license.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JOptionPane.showMessageDialog(null, licenseString, "License", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(getMainWindow(), licenseString, "License", JOptionPane.PLAIN_MESSAGE);
             }
         });
         
@@ -256,7 +261,7 @@ public class Window extends JFrame
         menuItemAbout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // show credits & version if user clicks: Help -> About
-                JOptionPane.showMessageDialog(null, "Created by " + author + "\nVersion " + version, "About",
+                JOptionPane.showMessageDialog(getMainWindow(), "Created by " + author + "\nVersion " + version, "About",
                         JOptionPane.INFORMATION_MESSAGE,
                         new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
             }
