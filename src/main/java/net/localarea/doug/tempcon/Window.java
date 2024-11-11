@@ -54,7 +54,7 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.17.3";
+    private final String version = "2.17.4";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -62,7 +62,7 @@ public class Window extends JFrame
     
     private DecimalFormat formatter;
     private String precision = "#.##";   // number of decimal places
-    private double temperature = 0.0;
+    private double temperature = 60.0;
     
     private String choices[] = { "Fahrenheit", "Celsius", "Kelvin", "Rankine" };
     private final int FAHRENHEIT = 0;
@@ -70,10 +70,10 @@ public class Window extends JFrame
     private final int KELVIN     = 2;
     private final int RANKINE    = 3;
     
-    private String gettingStartedMsg = "Enter a temperature to convert, then press " +
-            "the enter\nkey or select a different temperature from the drop down menu.";
+    private String gettingStartedMsg = "Input a temperature then press " +
+            "the enter key.\nYou can select different temperature scales from the drop down menu.";
     
-    private String licenseString = "MIT License\n\nCopyright (c) 2013 Douglas Chidester\n\n" +
+    private String licenseString = "MIT License\n\nCopyright (c) 2013 " + author + "\n\n" +
             "Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
             "of this software and associated documentation files (the \"Software\"), to deal\n" +
             "in the Software without restriction, including without limitation the rights\n" +
@@ -118,6 +118,7 @@ public class Window extends JFrame
         createGUI();
         addComponentsToPanel();
         createMenubar();
+        updateResultTF(); // calculate and update initial values
         setVisible(true); // display
     }
     
@@ -166,14 +167,13 @@ public class Window extends JFrame
         
         // temperatureInputTF
         temperatureInputTF = new JTextField(8);
-        temperatureInputTF.setText("" + 0.0f);
+        temperatureInputTF.setText("" + temperature);
         temperatureInputTF.setHorizontalAlignment(JTextField.CENTER);
         temperatureInputTF.addActionListener(tcl);
         temperatureInputTF.setFont(uiFont);
         
         // temperatureResultTF
         temperatureResultTF = new JTextField(10);
-        temperatureResultTF.setText("-17.78");
         temperatureResultTF.setEditable(false);
         temperatureResultTF.setHorizontalAlignment(JTextField.CENTER);
         temperatureResultTF.setFont(uiFont);
@@ -327,3 +327,4 @@ public class Window extends JFrame
         }
     }
 }
+
