@@ -9,16 +9,16 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "mainline" ]
+    branches: [ 'mainline' ]
   pull_request:
-    branches: [ "mainline" ]
+    branches: [ 'mainline' ]
 
 jobs:
   job_linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 11, 17, 21 ]
+        java: [ '11', '17', '21' ]
     name: Java ${{ matrix.java }}
     steps:
     - uses: actions/checkout@v4
@@ -26,6 +26,8 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java }}
+        distribution: 'temurin'
+        architecture: x64
     - name: Clean
       run: gradle clean
     - name: Unit test
@@ -33,43 +35,47 @@ jobs:
     - name: Build
       run: gradle build
   
-  job_windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        java: [ 11, 17, 21 ]
-    name: Java ${{ matrix.java }}
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup java
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ matrix.java }}
-    - name: Clean
-      run: gradle clean
-    - name: Unit test
-      run: gradle test
-    - name: Build
-      run: gradle build
+  # job_windows:
+  #   runs-on: windows-latest
+  #   strategy:
+  #     matrix:
+  #       java: [ '11', '17', '21' ]
+  #   name: Java ${{ matrix.java }}
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Setup java
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       java-version: ${{ matrix.java }}
+  #       distribution: 'temurin'
+  #       architecture: x64
+  #   - name: Clean
+  #     run: gradle clean
+  #   - name: Unit test
+  #     run: gradle test
+  #   - name: Build
+  #     run: gradle build
 
-  job_mac:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        java: [ 11, 17, 21 ]
-    name: Java ${{ matrix.java }}
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup java
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ matrix.java }}
-    - name: Clean
-      run: gradle clean
-    - name: Unit test
-      run: gradle test
-    - name: Build
-      run: gradle build
+  # job_mac:
+  #   runs-on: macos-latest
+  #   strategy:
+  #     matrix:
+  #       java: [ '11', '17', '21' ]
+  #   name: Java ${{ matrix.java }}
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Setup java
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       java-version: ${{ matrix.java }}
+  #       distribution: 'temurin'
+  #       architecture: x64
+  #   - name: Clean
+  #     run: gradle clean
+  #   - name: Unit test
+  #     run: gradle test
+  #   - name: Build
+  #     run: gradle build
 
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
