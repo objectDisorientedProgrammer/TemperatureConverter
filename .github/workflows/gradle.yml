@@ -14,19 +14,63 @@ on:
     branches: [ "mainline" ]
 
 jobs:
-  build:
-
+  job_linux:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
+    strategy:
+      matrix:
+        java: [ 11, 17, 21 ]
+    name: Java ${{ matrix.java }}
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Setup java
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: ${{ matrix.java }}
+    - name: Clean
+      run: gradle clean
+    - name: Unit test
+      run: gradle test
+    - name: Build
+      run: gradle build
+  
+  job_windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        java: [ 11, 17, 21 ]
+    name: Java ${{ matrix.java }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+    - name: Clean
+      run: gradle clean
+    - name: Unit test
+      run: gradle test
+    - name: Build
+      run: gradle build
+
+  job_mac:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        java: [ 11, 17, 21 ]
+    name: Java ${{ matrix.java }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+    - name: Clean
+      run: gradle clean
+    - name: Unit test
+      run: gradle test
+    - name: Build
+      run: gradle build
+
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -38,13 +82,13 @@ jobs:
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-      with:
-        gradle-version: '4.4.1'
+    # - name: Setup Gradle
+    #   uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+    #   with:
+    #     gradle-version: '4.4.1'
     
-    - name: Build with Gradle 4.4.1
-      run: gradle build
+    # - name: Build with Gradle 4.4.1
+    #   run: gradle build
 
   # dependency-submission:
 
