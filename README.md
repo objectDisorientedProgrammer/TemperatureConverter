@@ -1,28 +1,24 @@
 # Temperature Converter
-This desktop application converts between Kelvin, Celcius, Rankine, and Fahrenheit temperature scales.
+This desktop application converts between Celcius, Fahrenheit, Kelvin, and Rankine temperature scales. <!-- It may be run as a command line interface (CLI) or graphical user interface (GUI). -->
 
-Author Douglas Chidester
-
-## Dependencies
-* Java 11
-* gradle 4.4.1+
+## Requirements
+* Java 11+
+* gradle 8.11
 
 ## Building
 This project uses Gradle as a build system.
 
 To build:
 
-    gradle build
+    ./gradlew build
 
 To clean:
 
-    gradle clean
+    ./gradlew clean
     
-Default jar output path is: `build/libs/`
+Default jar output path is: `build/libs/*.jar`
 
 ## Running the program
-You can use `gradle run` from a command line interface or any of the following options when executing the jar file directly.
-
 #### Linux
 Double click the .jar file to run the program.
 
@@ -30,12 +26,15 @@ If this does not work, you may need to make the file executable:
 
     chmod +x TemperatureConverter.jar
 
-You can also run through the command line:
+<!-- You can also run through the command line:
     
-    java -jar TemperatureConverter.jar
-
+    java -jar TemperatureConverter.jar -h
+-->
 #### Mac
-See instructions for Linux.
+Should be similar to the instructions for Linux.
 
 #### Windows
 Double click the .jar file to run the program.
+
+
+Created by Douglas Chidester
