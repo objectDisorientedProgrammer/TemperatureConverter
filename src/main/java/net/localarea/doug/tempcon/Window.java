@@ -54,7 +54,7 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.18.0";
+    private final String version = "2.18.1";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -64,11 +64,11 @@ public class Window extends JFrame
     private String precision = "#.##";   // number of decimal places
     private double temperature = 60.0;
     
-    private String choices[] = { "Fahrenheit", "Celsius", "Kelvin", "Rankine" };
-    private final int FAHRENHEIT = 0;
-    private final int CELSIUS    = 1;
-    private final int KELVIN     = 2;
-    private final int RANKINE    = 3;
+    private final String celsius = "Celsius";
+    private final String fahrenheit = "Fahrenheit";
+    private final String kelvin = "Kelvin";
+    private final String rankine = "Rankine";
+    private String choices[] = { celsius, fahrenheit, kelvin, rankine };
     
     private String gettingStartedMsg = "Input a temperature then press " +
             "the enter key.\nYou can select different temperature scales from the drop down menu.";
@@ -286,42 +286,44 @@ public class Window extends JFrame
         TemperatureConverter tempCon = null;
         
         // determine which temperature to convert to
-        switch(toTemperature.getSelectedIndex())
+        switch(choices[toTemperature.getSelectedIndex()])
         {
-            case FAHRENHEIT:
+            case fahrenheit:
                 tempCon = new FahrenheitConverter();
                 break;
-            case CELSIUS:
+            case celsius:
                 tempCon = new CelsiusConverter();
                 break;
-            case KELVIN:
+            case kelvin:
                 tempCon = new KelvinConverter();
                 break;
-            case RANKINE:
+            case rankine:
                 tempCon = new RankineConverter();
                 break;
             default:
+                // this should never happen
                 break;
         }
         
         if(tempCon != null)
         {
             // determine which temperature to convert from
-            switch(fromTemperature.getSelectedIndex())
+            switch(choices[fromTemperature.getSelectedIndex()])
             {
-            case FAHRENHEIT:
+            case fahrenheit:
                 temperatureResultTF.setText(formatter.format(tempCon.convertFromFahrenheit(temperature)));
                 break;
-            case CELSIUS:
+            case celsius:
                 temperatureResultTF.setText(formatter.format(tempCon.convertFromCelsius(temperature)));
                 break;
-            case KELVIN:
+            case kelvin:
                 temperatureResultTF.setText(formatter.format(tempCon.convertFromKelvin(temperature)));
                 break;
-            case RANKINE:
+            case rankine:
                 temperatureResultTF.setText(formatter.format(tempCon.convertFromRankine(temperature)));
                 break;
             default:
+                // this should never happen
                 break;
             }
         }
