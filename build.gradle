@@ -2,15 +2,15 @@ plugins {
     id 'java'
 }
 
-version = '2.18.1'
+version = '2.18.0'
 
 repositories {
     mavenCentral()
 }
 
-/*dependencies {
-    implementation 'commons-io:commons-io:2.6'
-}*/
+dependencies {
+    //implementation 'commons-io:commons-io:2.6'
+}
 
 tasks.register('uberJar', Jar) {
     archiveClassifier = 'uber'
