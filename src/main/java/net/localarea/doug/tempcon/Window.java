@@ -38,6 +38,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
+import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.io.IOException;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -231,6 +241,103 @@ public class Window extends JFrame
         
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
+
+        JMenuItem menuItemUpdate = new JMenuItem("Check for updates",
+                new ImageIcon(this.getClass().getResource(imagePath+"update.png")));
+        menuItemUpdate.setMnemonic(KeyEvent.VK_C);
+        menuItemUpdate.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                try {
+                // Set up a REST GET query to the github API
+                final String urlCommon = "objectDisorientedProgrammer/TemperatureConverter/";
+                final String urlBase = "https://api.github.com/repos/" + urlCommon;
+                URL tags = new URL(urlBase + "tags");
+                HttpURLConnection conn = (HttpURLConnection) tags.openConnection();
+                conn.setRequestMethod("GET");
+
+                if(conn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    // download json
+                    // Collect the response
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuffer response = new StringBuffer();
+                    String line = null;
+                    while((line = in.readLine()) != null)
+                    {
+                        response.append(line);
+                    }
+                    in.close();
+                    //System.out.println(response.toString());
+                    // compare version number of this vs json
+                    /* parsing JSON:
+                        [{"name":"v2.17.4",
+                    */
+                    int ver = response.toString().indexOf("name");
+                    String sub = response.substring(ver+1);
+                    sub = sub.substring(sub.indexOf('"')+1);
+                    sub = sub.substring(sub.indexOf('"')+1);
+                    String latest = sub.substring(0, sub.indexOf('"')).trim();
+                    //System.out.println("\n\n[remaining JSON] " + sub + "\n\n");
+                    System.out.println("[version] '" + latest+"'");
+
+                    final String urlVersionString = latest; // save the URL friendly version format
+                    latest = latest.substring(1); // remove v in v2.17.4
+                    System.out.println("[int version] '" + latest+"'");
+                    // compare version numbers
+                    String[] currentVersion = /*TemperatureConverter.*/version.trim().split("\\.");
+                    String[] latestVersion = latest.split("\\.");
+
+                    // if the queried latest version is larger than the current application version, prompt the user to update
+                    if(Integer.parseInt(latestVersion[0]) > Integer.parseInt(currentVersion[0])
+                            || Integer.parseInt(latestVersion[1]) > Integer.parseInt(currentVersion[1])
+                            || Integer.parseInt(latestVersion[2]) > Integer.parseInt(currentVersion[2]))
+                    {
+                        // Create a fancy panel to show current and new versions along with a
+                        // button to take the user to the download page
+                        JPanel update = new JPanel();
+                        update.setLayout(new BoxLayout(update, BoxLayout.Y_AXIS));
+                        JLabel curver = new JLabel("Current version: " + /*TemperatureConverter.*/version);
+                        curver.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        update.add(curver);
+
+                        JLabel newver = new JLabel("New version: " + latest);
+                        newver.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        update.add(newver);
+
+                        update.add(new JLabel(" ")); // poor man's padding
+
+                        // TODO replace image?
+                        JButton download = new JButton(
+                                new ImageIcon(this.getClass().getResource(imagePath+"update.png")));
+                        download.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        
+                        // save for action listener
+
+                        update.add(download);
+                        update.add(new JLabel(" ")); // poor man's padding
+
+                        // Display the update message window
+                        Object[] options = { "Close" };
+                        JOptionPane.showOptionDialog(null, update, "Update Available", JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    }
+                    // present user with download available
+
+                }
+                else
+                {
+                    // Program is up to date - inform the user
+                    Object[] opt = { "Great" };
+                    JOptionPane.showOptionDialog(null, "Version: "+ /*TemperatureConverter.*/version, "Up to date",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opt, opt[0]);
+                }
+
+                } catch (IOException e1) { e1.printStackTrace(); }
+            }
+        });
         
         menuItemGettingStarted = new JMenuItem("Getting Started",
                 new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
@@ -245,10 +352,10 @@ public class Window extends JFrame
             }
         });
         
-        JMenuItem license = new JMenuItem("License");
-        license.setMnemonic(KeyEvent.VK_L);
-        license.setToolTipText("Display software license");
-        license.addActionListener(new ActionListener() {
+        JMenuItem menuItemLicense = new JMenuItem("License");
+        menuItemLicense.setMnemonic(KeyEvent.VK_L);
+        menuItemLicense.setToolTipText("Display software license");
+        menuItemLicense.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 JOptionPane.showMessageDialog(getMainWindow(), licenseString, "License", JOptionPane.PLAIN_MESSAGE);
@@ -274,7 +381,9 @@ public class Window extends JFrame
         // add help menu
         menuBar.add(helpMenu);
         helpMenu.add(menuItemGettingStarted);
-        helpMenu.add(license);
+        helpMenu.addSeparator();
+        helpMenu.add(menuItemUpdate);
+        helpMenu.add(menuItemLicense);
         helpMenu.add(menuItemAbout);
     }
     
