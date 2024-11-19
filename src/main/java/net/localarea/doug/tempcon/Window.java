@@ -31,14 +31,19 @@
 
 package net.localarea.doug.tempcon;
 
+import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.net.URI;
 import java.text.DecimalFormat;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,7 +59,7 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.18.1";
+    private final String version = "2.18.0";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -62,7 +67,7 @@ public class Window extends JFrame
     
     private DecimalFormat formatter;
     private String precision = "#.##";   // number of decimal places
-    private double temperature = 60.0;
+    private double temperature = 11.0;
     
     private final String celsius = "Celsius";
     private final String fahrenheit = "Fahrenheit";
@@ -231,6 +236,77 @@ public class Window extends JFrame
         
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
+
+        JMenuItem menuItemUpdate = new JMenuItem("Check for updates",
+                new ImageIcon(this.getClass().getResource(imagePath+"update.png")));
+        menuItemUpdate.setMnemonic(KeyEvent.VK_C);
+        menuItemUpdate.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // Set up a REST GET query to the github API
+                String urlCommon = "objectDisorientedProgrammer/"+applicationName.replaceAll("\\s+","")+"/";
+                String urlBase = "https://api.github.com/repos/" + urlCommon;
+                UpdateHandler up = new UpdateHandler(urlBase + "tags");
+                
+                if (!up.isLatestVersion(version))
+                {
+                	// present the user with download available
+                	
+                	// Create a fancy panel to show current and new versions along with a
+                    // button to take the user to the download page
+                    JPanel update = new JPanel();
+                    update.setLayout(new BoxLayout(update, BoxLayout.Y_AXIS));
+                    JLabel curver = new JLabel("Current version: " + /*TemperatureConverter.*/version);
+                    curver.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    update.add(curver);
+
+                    JLabel newver = new JLabel("New version: " + up.getLatestVersionNumber());
+                    newver.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    update.add(newver);
+
+                    update.add(new JLabel(" ")); // poor man's padding
+
+                    // TODO replace image?
+                    JButton download = new JButton(
+                            new ImageIcon(this.getClass().getResource(imagePath+"update.png")));
+                    download.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    download.addActionListener(new ActionListener()
+                    {
+                        @Override
+                        public void actionPerformed(ActionEvent e)
+                        {
+                            try {
+                                final String programName = applicationName.replaceAll("\\s+","");
+                                final String dl = "https://www.github.com/" + urlCommon +
+                                        "releases/download/" + up.getUriVersionTag() + "/"
+                                        + /*TemperatureConverter.*/programName + ".jar";
+                                //TODO for testing System.out.println("[DOWNLOAD LINK] >" + dl + "<");
+                                Desktop.getDesktop().browse(new URI(dl));
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, e1.getMessage(), "URL ERROR",
+                                        JOptionPane.ERROR_MESSAGE, null);
+                            }
+                        }
+                    });
+                    update.add(download);
+                    update.add(new JLabel(" ")); // poor man's padding
+
+                    // Display the update message window
+                    Object[] options = { "Close" };
+                    JOptionPane.showOptionDialog(null, update, "Update Available", JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                }
+                else
+                {
+                	// Program is up to date - inform the user
+                    Object[] opt = { "Great" };
+                    JOptionPane.showOptionDialog(null, "Version: "+ /*TemperatureConverter.*/version, "Up to date",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opt, opt[0]);
+                }
+            }
+        });
         
         menuItemGettingStarted = new JMenuItem("Getting Started",
                 new ImageIcon(this.getClass().getResource(imagePath+"help.png")));
@@ -245,10 +321,10 @@ public class Window extends JFrame
             }
         });
         
-        JMenuItem license = new JMenuItem("License");
-        license.setMnemonic(KeyEvent.VK_L);
-        license.setToolTipText("Display software license");
-        license.addActionListener(new ActionListener() {
+        JMenuItem menuItemLicense = new JMenuItem("License");
+        menuItemLicense.setMnemonic(KeyEvent.VK_L);
+        menuItemLicense.setToolTipText("Display software license");
+        menuItemLicense.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 JOptionPane.showMessageDialog(getMainWindow(), licenseString, "License", JOptionPane.PLAIN_MESSAGE);
@@ -274,7 +350,9 @@ public class Window extends JFrame
         // add help menu
         menuBar.add(helpMenu);
         helpMenu.add(menuItemGettingStarted);
-        helpMenu.add(license);
+        helpMenu.addSeparator();
+        helpMenu.add(menuItemUpdate);
+        helpMenu.add(menuItemLicense);
         helpMenu.add(menuItemAbout);
     }
     
