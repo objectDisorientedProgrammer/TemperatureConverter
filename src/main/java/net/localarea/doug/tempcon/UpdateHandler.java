@@ -56,13 +56,13 @@ public class UpdateHandler
 	}
 	
 	/**
-	 * 
+	 * Compare a version number with the most recent release.
 	 * @param currentVersion - X.Y.Z style version number
-	 * @return true if currentVersion is the newest
+	 * @return true if currentVersion is the newest; Otherwise false.
 	 */
 	public boolean isLatestVersion(String currentVersion)
 	{
-		return currentVersion.compareTo(versionList.getFirst()) > 0 ? true : false;
+		return currentVersion.compareTo(versionList.getFirst()) < 0 ? false : true;
 	}
 	
 	public String getLatestVersionNumber()
