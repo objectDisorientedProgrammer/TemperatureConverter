@@ -20,16 +20,14 @@ Default jar output path is: `build/libs/*.jar`
 
 ## Running the program
 #### Linux
-Double click the .jar file to run the program.
-
-If this does not work, you may need to make the file executable:
+Double click the .jar file to run the program. If this does not work, you may need to make the file executable:
 
     chmod +x TemperatureConverter.jar
 
-<!-- You can also run through the command line:
-    
-    java -jar TemperatureConverter.jar -h
--->
+You can also run through the command line:
+
+    java -jar TemperatureConverter.jar
+
 #### Mac
 Should be similar to the instructions for Linux.
 
@@ -37,4 +35,4 @@ Should be similar to the instructions for Linux.
 Double click the .jar file to run the program.
 
 
-Created by Douglas Chidester
+Created by objectDisorientedProgrammer
