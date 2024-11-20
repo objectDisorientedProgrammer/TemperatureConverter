@@ -25,7 +25,9 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. Ubuntu 24.10, Windows 11]
- - Version [e.g. 1.8.0]
+ - Application Version: [e.g. 1.8.0]
+ - Java Version: [e.g. openjdk version "21.0.5" 2024-10-15]
+ - Gradle Version: [e.g. 8.11]
 
 **Additional context**
 Add any other context about the problem here.
