@@ -44,6 +44,3 @@ jar {
                    "Main-Class": "net.localarea.doug.tempcon.Main")
     }
 }
-
-//tasks.named('jar') { manifest.writeTo(layout.buildDirectory.file('mymanifest.mf')) }
-
