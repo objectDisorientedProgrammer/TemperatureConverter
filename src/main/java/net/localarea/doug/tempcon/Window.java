@@ -59,7 +59,6 @@ public class Window extends JFrame
 {
     // variables
     private final static String applicationName = "Temperature Converter";
-    private final String version = "2.18.2";
     private final String author = "Douglas Chidester";
     private final int frameWidth = 345;
     private final int frameHeight = 180;
@@ -249,6 +248,7 @@ public class Window extends JFrame
                 String urlCommon = "objectDisorientedProgrammer/"+applicationName.replaceAll("\\s+","")+"/";
                 String urlBase = "https://api.github.com/repos/" + urlCommon;
                 UpdateHandler up = new UpdateHandler(urlBase + "tags");
+                String version = ConfigData.getInstance().getVersion();
                 
                 if (!up.isLatestVersion(version))
                 {
@@ -258,7 +258,7 @@ public class Window extends JFrame
                     // button to take the user to the download page
                     JPanel update = new JPanel();
                     update.setLayout(new BoxLayout(update, BoxLayout.Y_AXIS));
-                    JLabel curver = new JLabel("Current version: " + /*TemperatureConverter.*/version);
+                    JLabel curver = new JLabel("Current version: " + version);
                     curver.setAlignmentX(Component.CENTER_ALIGNMENT);
                     update.add(curver);
 
@@ -302,7 +302,7 @@ public class Window extends JFrame
                 {
                 	// Program is up to date - inform the user
                     Object[] opt = { "Great" };
-                    JOptionPane.showOptionDialog(null, "Version: "+ /*TemperatureConverter.*/version, "Up to date",
+                    JOptionPane.showOptionDialog(null, "Version: "+ version, "Up to date",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opt, opt[0]);
                 }
             }
@@ -337,7 +337,7 @@ public class Window extends JFrame
         menuItemAbout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // show credits & version if user clicks: Help -> About
-                JOptionPane.showMessageDialog(getMainWindow(), "Created by " + author + "\nVersion " + version, "About",
+                JOptionPane.showMessageDialog(getMainWindow(), "Created by " + author + "\nVersion " + ConfigData.getInstance().getVersion(), "About",
                         JOptionPane.INFORMATION_MESSAGE,
                         new ImageIcon(this.getClass().getResource(imagePath+"person.png")));
             }
