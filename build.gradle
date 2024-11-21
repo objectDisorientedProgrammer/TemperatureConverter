@@ -7,8 +7,6 @@ plugins {
     id 'com.adarshr.test-logger' version '4.0.0'
 }
 
-version = '2.18.2'
-
 repositories {
     mavenCentral()
 }
@@ -37,10 +35,19 @@ tasks.register('uberJar', Jar) {
     }
 }
 
+task populateVersion {
+    def versionFile = file('version.txt')
+    if (!versionFile.exists()) {
+        versionFile.text = '0.0.0' // dummy version if file not found
+    }
+    // set project version
+    project.version = versionFile.text.trim()
+}
+
 jar {
     manifest {
         attributes("Implementation-Title": "Temperature Converter",
-                   "Implementation-Version": archiveVersion,
+                   "Implementation-Version": project.version,
                    "Main-Class": "net.localarea.doug.tempcon.Main")
     }
 }
