@@ -247,13 +247,11 @@ public class Window extends JFrame
                 // Set up a REST GET query to the github API
                 String urlCommon = "objectDisorientedProgrammer/"+applicationName.replaceAll("\\s+","")+"/";
                 String urlBase = "https://api.github.com/repos/" + urlCommon;
-                UpdateHandler up = new UpdateHandler(urlBase + "tags");
+                boolean updateAvailable = UpdateHandler.getInstance().checkForUpdate(urlBase + "tags");
                 String version = ConfigData.getInstance().getVersion();
                 
-                if (!up.isLatestVersion(version))
+                if (updateAvailable && !UpdateHandler.getInstance().isLatestVersion(version))
                 {
-                	// present the user with download available
-                	
                 	// Create a fancy panel to show current and new versions along with a
                     // button to take the user to the download page
                     JPanel update = new JPanel();
@@ -262,7 +260,7 @@ public class Window extends JFrame
                     curver.setAlignmentX(Component.CENTER_ALIGNMENT);
                     update.add(curver);
 
-                    JLabel newver = new JLabel("New version: " + up.getLatestVersionNumber());
+                    JLabel newver = new JLabel("New version: " + UpdateHandler.getInstance().getLatestVersionNumber());
                     newver.setAlignmentX(Component.CENTER_ALIGNMENT);
                     update.add(newver);
 
@@ -280,7 +278,7 @@ public class Window extends JFrame
                             try {
                                 final String programName = applicationName.replaceAll("\\s+","");
                                 final String dl = "https://www.github.com/" + urlCommon +
-                                        "releases/download/" + up.getUriVersionTag() + "/"
+                                        "releases/download/" + UpdateHandler.getInstance().getUriVersionTag() + "/"
                                         + /*TemperatureConverter.*/programName + ".jar";
                                 //TODO for testing System.out.println("[DOWNLOAD LINK] >" + dl + "<");
                                 Desktop.getDesktop().browse(new URI(dl));

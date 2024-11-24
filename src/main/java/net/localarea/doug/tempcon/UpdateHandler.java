@@ -11,48 +11,102 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Handles checking for updates.
  */
 public class UpdateHandler
 {
-	private String fullJson;
+	private static UpdateHandler instance;
 	private ArrayList<String> versionList;
+	private String errorVersion = "0.0.0";
 	
-	public UpdateHandler(String uri)
+	private UpdateHandler()
 	{
-		// TODO this needs to happen in a separate thread...
-		try
-		{
-			URI tags = new URI(uri);
-			HttpURLConnection conn = (HttpURLConnection) tags.toURL().openConnection();
-	        conn.setRequestMethod("GET");
-	        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK)
-	        {
-	        	BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	            StringBuffer response = new StringBuffer();
-	            String line = null;
-	            while((line = in.readLine()) != null)
-	            {
-	                response.append(line);
-	            }
-	            in.close();
-	            fullJson = response.toString();
-	        }
-		}
-		catch (URISyntaxException e1) {
+		versionList = new ArrayList<String>();
+	}
+	
+	public static UpdateHandler getInstance()
+	{
+		if (instance == null)
+			instance = new UpdateHandler();
+		return instance;
+	}
+	
+	public boolean checkForUpdate(String uri)
+	{
+		ExecutorService exec = Executors.newFixedThreadPool(2);
+		
+		CompletableFuture<String> fetchVersions = CompletableFuture.supplyAsync(()-> {
+			try
+			{
+				URI tags = new URI(uri);
+				HttpURLConnection conn = (HttpURLConnection) tags.toURL().openConnection();
+		        conn.setRequestMethod("GET");
+		        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK)
+		        {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		            StringBuffer response = new StringBuffer();
+		            String line = null;
+		            while((line = in.readLine()) != null)
+		            {
+		                response.append(line);
+		            }
+		            in.close();
+		            return response.toString();
+		        }
+		        else
+		        {
+		            System.err.println("ERROR got response: " + conn.getResponseCode() + "\n\t"+conn.getResponseMessage());
+		        }
+		        return errorVersion;
+			}
+			catch (URISyntaxException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return errorVersion;
+		}, exec);
+
+		CompletableFuture<String> processJson = fetchVersions.thenApply(json -> {
+			if (json != null && !json.equals(errorVersion))
+			{
+				collectVersions(json);
+				return "DONE";
+			}
+			else
+				System.out.println("failed retrieving JSON");
+			return "FAIL";
+		});
+
+		try {
+			if (!processJson.get().equals("DONE"))
+			{
+			    exec.shutdown();
+			    versionList.add(errorVersion);
+			}
+			else
+			{
+			    exec.shutdown();
+			    // sort descending (highest version first)
+		        versionList.sort((v1, v2) -> v2.compareTo(v1));
+			    return true;
+			}
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		versionList = new ArrayList<String>();
-		collectVersions(fullJson);
-		// sort descending (highest version first)
-		versionList.sort((v1, v2) -> v2.compareTo(v1));
+		return false;
 	}
 	
 	/**
@@ -62,7 +116,9 @@ public class UpdateHandler
 	 */
 	public boolean isLatestVersion(String currentVersion)
 	{
-		return currentVersion.compareTo(versionList.getFirst()) < 0 ? false : true;
+	    if (currentVersion != null)
+	        return currentVersion.compareTo(versionList.getFirst()) < 0 ? false : true;
+	    return false;
 	}
 	
 	public String getLatestVersionNumber()

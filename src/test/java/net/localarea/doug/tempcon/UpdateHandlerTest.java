@@ -7,22 +7,22 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class UpdateHandlerTest {
-	UpdateHandler up;
+    String githubApi = "https://api.github.com/repos/objectDisorientedProgrammer/TemperatureConverter/tags";
 	
 	@BeforeEach
     void init() {
-		up = new UpdateHandler("https://api.github.com/repos/objectDisorientedProgrammer/TemperatureConverter/tags");
     }
 
 	@Test
 	void testUpdateHandler() {
-		assertNotNull(up);
+		assertNotNull(UpdateHandler.getInstance());
 	}
 
 	@Test
 	void testIsLatestVersion() {
-		String current = up.getLatestVersionNumber();
-		assertTrue(up.isLatestVersion(current));
+	    assertTrue(UpdateHandler.getInstance().checkForUpdate(githubApi));
+		String current = UpdateHandler.getInstance().getLatestVersionNumber();
+		assertTrue(UpdateHandler.getInstance().isLatestVersion(current));
 		
 		String[] semver = current.split("\\.");
 		int major = Integer.parseInt(semver[0]);
@@ -38,20 +38,22 @@ class UpdateHandlerTest {
 		else if (major > 0)
 			older = (major-1) +"."+ semver[1] +"."+ semver[2];
 		
-		assertTrue(up.isLatestVersion(newer));
-		assertFalse(up.isLatestVersion(older));
+		assertTrue(UpdateHandler.getInstance().isLatestVersion(newer));
+		assertFalse(UpdateHandler.getInstance().isLatestVersion(older));
 	}
 
 	@Test
 	void testGetLatestVersionNumber() {
-		String version = up.getLatestVersionNumber();
+	    assertTrue(UpdateHandler.getInstance().checkForUpdate(githubApi));
+		String version = UpdateHandler.getInstance().getLatestVersionNumber();
 		assertNotNull(version);
 		assertEquals(3, version.split("\\.").length);
 	}
 
 	@Test
 	void testGetUriVersionTag() {
-		String tag = up.getUriVersionTag();
+	    assertTrue(UpdateHandler.getInstance().checkForUpdate(githubApi));
+		String tag = UpdateHandler.getInstance().getUriVersionTag();
 		assertNotNull(tag);
 		assertEquals('v', tag.charAt(0));
 		assertEquals(3, tag.split("\\.").length);
