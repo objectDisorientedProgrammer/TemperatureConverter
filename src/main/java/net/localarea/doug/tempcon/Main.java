@@ -39,13 +39,17 @@ public class Main
 {
     public static void main(String args[])
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
+        // if no command line args, assume application is running as an GUI
+        if (args.length == 0)
+            SwingUtilities.invokeLater(new Runnable()
             {
-                new Window(); // launch the GUI
-            }
-        });
+                @Override
+                public void run()
+                {
+                    new Window(); // launch the GUI
+                }
+            });
+        else
+            new CommandInterpreter(args);
     }
 }
