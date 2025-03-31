@@ -33,14 +33,15 @@ package net.localarea.doug.tempcon;
 
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URI;
 import java.text.DecimalFormat;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,9 +61,10 @@ public class Window extends JFrame
     // variables
     private final static String applicationName = "Temperature Converter";
     private final String author = "Douglas Chidester";
-    private final int frameWidth = 345;
-    private final int frameHeight = 180;
-    private JPanel mainPanel;
+    private final int frameWidth = 340;
+    private final int frameHeight = 140;
+    private JPanel comboboxPanel;
+    private JPanel textFieldPanel;
     
     private DecimalFormat formatter;
     private String precision = "#.##";   // number of decimal places
@@ -98,8 +100,6 @@ public class Window extends JFrame
     // GUI components
     private JTextField temperatureInputTF;
     private JTextField temperatureResultTF;
-    private JLabel fromLbl;
-    private JLabel toLbl;
     private JComboBox<String> fromTemperature;
     private JComboBox<String> toTemperature;
     private JMenuItem menuItemAbout;
@@ -115,6 +115,7 @@ public class Window extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(frameWidth, frameHeight);
         setLocationRelativeTo(null); // set frame location to center of screen
+        setMinimumSize(new Dimension(frameWidth-40, frameHeight-20));
         
         formatter = new DecimalFormat(precision);
         
@@ -136,14 +137,32 @@ public class Window extends JFrame
      */
     private void addComponentsToPanel()
     {
-        mainPanel.add(fromLbl);
-        mainPanel.add(toLbl);
-        mainPanel.add(fromTemperature);
-        mainPanel.add(toTemperature);
-        mainPanel.add(temperatureInputTF);
-        mainPanel.add(temperatureResultTF);
+        int vSpacing = 5;
+        int hSpacing = 5;
+
+        // add padding around each component in each "row"
+        Dimension componentPadding = new Dimension(hSpacing, 0);
+        comboboxPanel.add(Box.createRigidArea(componentPadding));
+        comboboxPanel.add(fromTemperature);
+        comboboxPanel.add(Box.createRigidArea(componentPadding));
+        comboboxPanel.add(toTemperature);
+        comboboxPanel.add(Box.createRigidArea(componentPadding));
         
-        this.add(mainPanel);
+        textFieldPanel.add(Box.createRigidArea(componentPadding));
+        textFieldPanel.add(temperatureInputTF);
+        textFieldPanel.add(Box.createRigidArea(componentPadding));
+        textFieldPanel.add(temperatureResultTF);
+        textFieldPanel.add(Box.createRigidArea(componentPadding));
+
+        // add padding around each "column"
+        // This creates the desired spacing but only resizes components in the
+        // textFieldPanel when the JFrame is resized...
+        Dimension panelPadding = new Dimension(hSpacing, vSpacing);
+        this.getContentPane().add(Box.createRigidArea(panelPadding));
+        this.getContentPane().add(comboboxPanel);
+        this.getContentPane().add(Box.createRigidArea(panelPadding));
+        this.getContentPane().add(textFieldPanel);
+        this.getContentPane().add(Box.createRigidArea(panelPadding));
     }
 
     /**
@@ -151,26 +170,22 @@ public class Window extends JFrame
      */
     private void createGUI()
     {
-        int rows = 3;
-        int columns = 2;
-        int vSpacing = 10;
-        int hSpacing = 10;
-        mainPanel = new JPanel(new GridLayout(rows, columns, vSpacing, hSpacing));
+        // make the JFrame's layout define "rows"
+        this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
+        // make "columns" for additional components
+        comboboxPanel = new JPanel(); // holds combobox components
+        comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.X_AXIS));
+
+        textFieldPanel = new JPanel(); // holds textfield components
+        textFieldPanel.setLayout(new BoxLayout(textFieldPanel, BoxLayout.X_AXIS));
         
         tcl = new TempChangeListener();
         
         Font uiFont = new Font(Font.DIALOG, Font.BOLD, 14);
         
-        // label to go with temperatureInputTF
-        fromLbl = new JLabel("From", null, JLabel.CENTER);
-        fromLbl.setFont(uiFont);
-        
-        // label to go with temperatureResultTF
-        toLbl = new JLabel("To", null, JLabel.CENTER);
-        toLbl.setFont(uiFont);
-        
         // temperatureInputTF
-        temperatureInputTF = new JTextField(8);
+        temperatureInputTF = new JTextField(10);
         temperatureInputTF.setText("" + temperature);
         temperatureInputTF.setHorizontalAlignment(JTextField.CENTER);
         temperatureInputTF.addActionListener(tcl);
@@ -186,28 +201,29 @@ public class Window extends JFrame
         fromTemperature = new JComboBox<String>(choices);
         fromTemperature.setEditable(false);
         fromTemperature.setSelectedItem(choices[0]);
-        fromTemperature.setMaximumRowCount(3);
+        fromTemperature.setMaximumRowCount(choices.length); // display all options
         fromTemperature.addActionListener(tcl);
+        // center text
+        ((JLabel)fromTemperature.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
         fromTemperature.setFont(uiFont);
         
         toTemperature = new JComboBox<String>(choices);
         toTemperature.setEditable(false);
         toTemperature.setSelectedItem(choices[1]);
-        toTemperature.setMaximumRowCount(3);
+        toTemperature.setMaximumRowCount(choices.length); // display all options
         toTemperature.addActionListener(tcl);
+        // center text
+        ((JLabel)toTemperature.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
         toTemperature.setFont(uiFont);
     }
     
     /**
      * Class to handle changing temperature scales.
-     * @author doug
-     *
      */
     private class TempChangeListener implements ActionListener
     {
         @Override
-        public void actionPerformed(ActionEvent ae)
-        {
+        public void actionPerformed(ActionEvent ae) {
             temperature = Float.parseFloat(temperatureInputTF.getText().toString());
             updateResultTF();
         }
