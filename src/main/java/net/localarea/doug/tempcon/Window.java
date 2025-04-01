@@ -102,6 +102,8 @@ public class Window extends JFrame
     private JTextField temperatureResultTF;
     private JComboBox<String> fromTemperature;
     private JComboBox<String> toTemperature;
+    private JButton equalsBtn;
+    private JButton swapConversions;
     private JMenuItem menuItemAbout;
     private JMenuItem menuItemExit;
     private JMenuItem menuItemGettingStarted;
@@ -124,6 +126,7 @@ public class Window extends JFrame
         addComponentsToPanel();
         createMenubar();
         updateResultTF(); // calculate and update initial values
+        pack();
         setVisible(true); // display
     }
     
@@ -145,11 +148,15 @@ public class Window extends JFrame
         comboboxPanel.add(Box.createRigidArea(componentPadding));
         comboboxPanel.add(fromTemperature);
         comboboxPanel.add(Box.createRigidArea(componentPadding));
+        comboboxPanel.add(swapConversions);
+        comboboxPanel.add(Box.createRigidArea(componentPadding));
         comboboxPanel.add(toTemperature);
         comboboxPanel.add(Box.createRigidArea(componentPadding));
         
         textFieldPanel.add(Box.createRigidArea(componentPadding));
         textFieldPanel.add(temperatureInputTF);
+        textFieldPanel.add(Box.createRigidArea(componentPadding));
+        textFieldPanel.add(equalsBtn);
         textFieldPanel.add(Box.createRigidArea(componentPadding));
         textFieldPanel.add(temperatureResultTF);
         textFieldPanel.add(Box.createRigidArea(componentPadding));
@@ -159,9 +166,9 @@ public class Window extends JFrame
         // textFieldPanel when the JFrame is resized...
         Dimension panelPadding = new Dimension(hSpacing, vSpacing);
         this.getContentPane().add(Box.createRigidArea(panelPadding));
-        this.getContentPane().add(comboboxPanel);
-        this.getContentPane().add(Box.createRigidArea(panelPadding));
         this.getContentPane().add(textFieldPanel);
+        this.getContentPane().add(Box.createRigidArea(panelPadding));
+        this.getContentPane().add(comboboxPanel);
         this.getContentPane().add(Box.createRigidArea(panelPadding));
     }
 
@@ -215,6 +222,20 @@ public class Window extends JFrame
         // center text
         ((JLabel)toTemperature.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
         toTemperature.setFont(uiFont);
+
+        // equals button
+        equalsBtn = new JButton(new ImageIcon(this.getClass().getResource(imagePath+"equals.png")));
+        equalsBtn.addActionListener(tcl);
+
+        // swap conversions button
+        swapConversions = new JButton(new ImageIcon(this.getClass().getResource(imagePath+"swap.png")));
+        swapConversions.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int tmp = fromTemperature.getSelectedIndex();
+                fromTemperature.setSelectedItem(choices[toTemperature.getSelectedIndex()]);
+                toTemperature.setSelectedItem(choices[tmp]);
+            }
+        });
     }
     
     /**
