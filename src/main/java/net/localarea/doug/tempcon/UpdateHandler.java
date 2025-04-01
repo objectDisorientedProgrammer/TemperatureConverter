@@ -1,5 +1,4 @@
 /**
- * @author Doug
  * @file UpdateHandler.java
  */
 package net.localarea.doug.tempcon;
