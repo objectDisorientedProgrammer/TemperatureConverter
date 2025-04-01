@@ -51,3 +51,10 @@ jar {
                    "Main-Class": "net.localarea.doug.tempcon.Main")
     }
 }
+
+task run(type: JavaExec, dependsOn: jar) {
+    group = 'application'
+    description = 'Run the application'
+    classpath = files(jar.archiveFile)
+    main = 'net.localarea.doug.tempcon.Main'
+}

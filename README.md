@@ -21,6 +21,10 @@ Default jar output path is: `build/libs/*.jar`
 **Note:** if builds begin failing because unit tests get a 403 error, use `./gradlew -x test build`
 
 ## Running the program
+Use gradle to run the program:
+
+    ./gradlew run
+
 #### Linux
 Double click the .jar file to run the program. If this does not work, you may need to make the file executable:
 
