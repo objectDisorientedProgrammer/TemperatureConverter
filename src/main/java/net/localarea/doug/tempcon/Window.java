@@ -246,6 +246,12 @@ public class Window extends JFrame
         @Override
         public void actionPerformed(ActionEvent ae) {
             temperature = Float.parseFloat(temperatureInputTF.getText().toString());
+            // sanatize input
+            if (temperature == -0)
+            {
+                temperature = 0;
+                temperatureInputTF.setText(temperature +"");
+            }
             updateResultTF();
         }
     }
