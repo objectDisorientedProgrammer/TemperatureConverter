@@ -2,7 +2,7 @@
 This desktop application converts between Celcius, Fahrenheit, Kelvin, and Rankine temperature scales. <!-- It may be run as a command line interface (CLI) or graphical user interface (GUI). -->
 
 ## Requirements
-* Java 11+
+* Java 21+
 * gradle 8.11
 
 ## Building

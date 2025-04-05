@@ -22,14 +22,14 @@ public class UpdateHandler
 {
 	private static UpdateHandler instance;
 	private ArrayList<String> versionList;
-	private String errorVersion = "0.0.0";
+	private final String errorVersion = "0.0.0";
 	
 	private UpdateHandler()
 	{
 		versionList = new ArrayList<String>();
 	}
 	
-	public static UpdateHandler getInstance()
+	public static synchronized UpdateHandler getInstance()
 	{
 		if (instance == null)
 			instance = new UpdateHandler();
@@ -64,10 +64,7 @@ public class UpdateHandler
 		        }
 		        return errorVersion;
 			}
-			catch (URISyntaxException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
+			catch (URISyntaxException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -88,22 +85,19 @@ public class UpdateHandler
 		try {
 			if (!processJson.get().equals("DONE"))
 			{
-			    exec.shutdown();
 			    versionList.add(errorVersion);
 			}
 			else
 			{
-			    exec.shutdown();
 			    // sort descending (highest version first)
 		        versionList.sort((v1, v2) -> v2.compareTo(v1));
 			    return true;
 			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO log the error?
 			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} finally {
+			exec.shutdown();
 		}
 		return false;
 	}
@@ -115,19 +109,19 @@ public class UpdateHandler
 	 */
 	public boolean isLatestVersion(String currentVersion)
 	{
-	    if (currentVersion != null)
-	        return currentVersion.compareTo(versionList.getFirst()) < 0 ? false : true;
+	    if (currentVersion != null && !versionList.isEmpty())
+	        return currentVersion.compareTo(versionList.getFirst()) >= 0;
 	    return false;
 	}
 	
 	public String getLatestVersionNumber()
 	{
-		return versionList.getFirst();
+		return versionList.isEmpty() ? errorVersion : versionList.getFirst();
 	}
 	
 	public String getUriVersionTag()
 	{
-		return "v" + versionList.getFirst();
+		return "v" + getLatestVersionNumber();
 	}
 	
 	public String getDownloadUri(String jarfileName)
@@ -170,15 +164,9 @@ public class UpdateHandler
 		if (parts.length == 3)
 			return version;
 		else if (parts.length > 3)
-		{
-			version = parts[0] + parts[1] + parts[2];
-		}
+			return parts[0] + "." + parts[1] + "." + parts[2];
 		else // < 3
-		{
-			version += ".0";
-			return enforceVersionFormat(version);
-		}
-		return version;
+			return enforceVersionFormat(version + ".0");
 	}
 	
 	/* TODO
