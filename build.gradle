@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
     id 'eclipse' // generate Eclipse project files
 
     // test logger plugin for colorful CLI test output
@@ -52,9 +53,9 @@ jar {
     }
 }
 
-task run(type: JavaExec, dependsOn: jar) {
+task runJar(type: JavaExec, dependsOn: jar) {
     group = 'application'
     description = 'Run the application'
     classpath = files(jar.archiveFile)
-    main = 'net.localarea.doug.tempcon.Main'
+    mainClass = 'net.localarea.doug.tempcon.Main'
 }
